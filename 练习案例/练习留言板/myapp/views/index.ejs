@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>练习</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <style>
+      table{
+        margin: 100px auto;
+      }
+      table th{
+        text-align: center;
+      }
+      tbody tr td input{
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!--表单-->
+      <form>
+        <div class="form-group">
+          <label for="xh">学号：</label>
+          <input type="text" class="xh form-control" id="xh" placeholder="请输入学号">
+        </div>
+        <div class="form-group">
+          <label for="xm">姓名：</label>
+          <input type="text" class="xm form-control" id="xm" placeholder="请输入姓名">
+        </div>
+        <div class="form-group">
+          <label for="nl">年龄：</label>
+          <input type="text" class="nl form-control" id="nl" placeholder="请输入年龄">
+        </div>
+        <div class="form-group">
+          <label for="xb">性别：</label>
+          <p>
+            <input type="radio" name="sex" class="xb" value="男" checked="checked"> 男
+            <input type="radio" name="sex" value="女"> 女
+          </p>
+        </div>
+        <div class="form-group">
+          <label for="bj">班级：</label>
+
+           <select name="" id="bj">
+             <option value="请选择班级">请选择班级</option>
+             <option value="1904A">1904A</option>
+             <option value="1904B">1904B</option>
+           </select>
+
+        </div>
+
+        <button type="button" class="add btn btn-default">添加</button>
+        <div class="form-group">
+          <label for="search">搜索：</label>
+          <input type="text" class="search form-control" id="search" placeholder="请输入姓名搜索">
+          <button type="button" class="sa btn btn-default">搜索</button>
+        </div>
+      </form>
+      <!--表格-->
+      <table class="table table-bordered text-center">
+       <thead>
+       <tr>
+         <th>学号</th>
+         <th>姓名</th>
+         <th>年龄</th>
+         <th>性别</th>
+         <th>班级</th>
+         <th>操作</th>
+       </tr>
+       </thead>
+        <tbody>
+        <%for(var i=0;i<data.length;i++){%>
+          <tr>
+            <td>
+              <p><%=data[i].id%></p>
+              <input type="text" class="a">
+            </td>
+            <td>
+              <p><%=data[i].name%></p>
+              <input type="text" class="b">
+            </td>
+            <td>
+              <p><%=data[i].age%></p>
+              <input type="text" class="c">
+            </td>
+            <td>
+              <p><%=data[i].sex%>%></p>
+              <input type="text" class="d">
+            </td>
+            <td>
+              <p><%=data[i].class%></p>
+              <input type="text" class="e">
+            </td>
+            <td>
+              <button v="<%=data[i]._id%>" type="button" class="del btn btn-warning">删除</button>
+              <button type="button" class="xg btn btn-danger">修改</button>
+            </td>
+          </tr>
+        <%}%>
+<!--        <tr>-->
+<!--          <td>1</td>-->
+<!--          <td>张三</td>-->
+<!--          <td>18</td>-->
+<!--          <td>男</td>-->
+<!--          <td>1904A</td>-->
+<!--          <td>-->
+<!--            <button type="button" class="del btn btn-warning">删除</button>-->
+<!--            <button type="button" class="xg btn btn-danger">修改</button>-->
+<!--          </td>-->
+<!--        </tr>-->
+        <tfoot>
+        <tr>
+          <td colspan="6">
+            <button type="button" class="delAll btn btn-warning">全部删除</button>
+          </td>
+        </tr>
+        </tfoot>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
+<script src="js/jquery-3.4.1.js"></script>
+<script src="js/bootstrap.js"></script>
+<script>
+  //封装函数
+  function add(){
+    //让tbody中的内容为空
+    $("tbody").html("");
+    //用ajax渲染，添加
+    $.ajax({
+      url:"/api/read",
+      success:function (rett) {
+        console.log(rett);
+        if(rett.code==0){
+          var data=rett.data;
+          var str="";
+          for(var i in data){
+            str+=` <tr>
+                                <td>${data[i].id}</td>
+                                <td>${data[i].name}</td>
+                                <td>${data[i].age}</td>
+                                <td>${data[i].sex}</td>
+                                <td>${data[i].class}</td>
+                                <td>
+                                  <button v="${data[i]._id}" type="button" class="del btn btn-warning">删除</button>
+                                  <button type="button" class="xg btn btn-danger">修改</button>
+                                </td>
+                         </tr>`
+          }
+          $("tbody").html(str);
+          $("#xh").val("");
+          $("#xm").val("");
+          $("#nl").val("");
+          $(".xb").prop("checked",true);
+          $("#bj").val("请选择班级");
+        }
+      },error:function (msg) {
+        console.log(msg)
+      }
+    })
+  };
+
+  //添加
+  $(".add").click(function () {
+    //获取文本框内容
+    var a=$("#xh").val();
+    var b=$("#xm").val();
+    var c=$("#nl").val();
+    var d=$("input:checked").val();
+    var e=$("#bj").val();
+   $.ajax({
+     url:"/api/add",
+     data:{
+       id:a,
+       name:b,
+       age:c,
+       sex:d,
+       class:e
+     },
+     success:function (ret) {
+       console.log(ret)
+       if(ret.code==0){
+         add();
+       }
+     },error:function (msg) {
+       console.log(msg)
+     }
+   })
+  });
+
+  //全部删除
+  $(".delAll").click(function () {
+    // alert(11)
+    $.ajax({
+      url:"/api/delAll",
+      success:function (ret) {
+        console.log(ret);
+        if(ret.code==0){
+          add();
+        }
+      },error:function (msg) {
+        console.log(msg)
+      }
+    })
+  });
+
+  //单行删除,局部渲染，要用事件委托
+  $("tbody").on("click",".del",function () {
+    //获取当前的每条数据的唯一的一个_id
+    var a=$(this).attr("v");
+    // alert(a);
+    $.ajax({
+      url:"/api/del",
+      data:{
+        _id:a
+      },
+      success:function (ret) {
+        console.log(ret)
+        if(ret.code==0){
+          add()
+        }
+      },error:function (msg) {
+        console.log(msg)
+      }
+    })
+  });
+
+  //搜索数据
+  $(".sa").click(function () {
+    // alert(11)
+    //获取文本框的内容
+    var a=$("#search").val();
+    $.ajax({
+      url:"/api/search",
+      data:{
+        name:a
+      },
+      success:function (ret) {
+        console.log(ret)
+        if(ret.code==0){
+          var data=ret.data;
+          var str="";
+          for(var i in data){
+            str+=` <tr>
+                                <td>${data[i].id}</td>
+                                <td>${data[i].name}</td>
+                                <td>${data[i].age}</td>
+                                <td>${data[i].sex}</td>
+                                <td>${data[i].class}</td>
+                                <td>
+                                  <button v="${data[i]._id}" type="button" class="del btn btn-warning">删除</button>
+                                  <button type="button" class="xg btn btn-danger">修改</button>
+                                </td>
+                         </tr>`
+          }
+          $("tbody").html(str);
+        }
+      },error:function (msg) {
+        console.log(msg)
+      }
+    })
+
+  });
+
+  //搜索框有无内容，不同的效果，input事件，也叫事件绑定
+  $(".search").on("input",function () {
+    var a=$(this).val();
+    if(a==""){
+      add();
+    }else{
+      $.ajax({
+        url:"/api/mh",
+        data:{
+          name:a
+        },
+        success:function (ret) {
+          console.log(ret)
+          if(ret.code==0){
+            var data=ret.data;
+            var str="";
+            for(var i in data){
+              str+=` <tr>
+                                <td>${data[i].id}</td>
+                                <td>${data[i].name}</td>
+                                <td>${data[i].age}</td>
+                                <td>${data[i].sex}</td>
+                                <td>${data[i].class}</td>
+                                <td>
+                                  <button v="${data[i]._id}" type="button" class="del btn btn-warning">删除</button>
+                                  <button type="button" class="xg btn btn-danger">修改</button>
+                                </td>
+                         </tr>`
+            }
+            $("tbody").html(str);
+          }
+        },error:function (msg) {
+          console.log(msg)
+        }
+      })
+    }
+  })
+
+
+  //修改数据有问题，还没解决
+  $(".xg").click(function () {
+    // $("tbody input").hide().siblings().show();
+    $("tbody tr").eq($(this).parents("tr").index()).find("td").click(function () {
+      $("tbody tr td input").eq($(this).parents("tr").children().index()).show().siblings().hide();
+    })
+    // var a=$(this).parents("tr").children().click(function () {
+    //   $("tbody input").show().siblings().hide();
+    // })
+  })
+
+</script>

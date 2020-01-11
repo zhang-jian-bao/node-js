@@ -1,0 +1,62 @@
+1. 什么是npm？
+
+    npm是包管理器 - 模块管理器
+        node package manger
+             包      器
+        组件：
+            npm网站 - 管理模块的地方
+            npm命令行工具
+
+    通过npm下载的模块会保存在 node_modules 目录
+        npm在下载模块的时候会创建一个node_modules目录，会讲下载模块保存在node_modules
+
+    npm下载模块的命令：
+        npm install 要下载模块名
+
+    npm下载指定版本的模块：
+        npm install 模块名@版本号
+
+
+    下载模块之前，一般会初始化一个文件： package.json
+    package.json 管理当前项目的依赖
+        项目名称
+        项目的作者
+        项目的描述
+        其他的内容
+
+    如何创建package.json文件
+
+        npm init
+
+    下载模块的时候，如何将下载的模块名称保存到package.json文件里面
+
+        --save   把项目下载的依赖保存到生产环境中   ---- 项目上线的时候
+
+        --save-dev     把项目保存到开发环境中     --- 在本地开发的时候
+
+    卸载一个模块或者删除一个模块
+
+        npm uninstall 模块名
+
+2. cnpm
+
+    cnpm 的安装
+        访问 https://npm.taobao.org/
+
+        然后在命令行 输入 npm install -g cnpm --registry=https://registry.npm.taobao.org
+
+    测试cnpm是否安装成功
+
+        cnpm -v
+
+
+
+3. 参考资料地址
+
+http://javascript.ruanyifeng.com/nodejs/npm.html
+http://javascript.ruanyifeng.com/nodejs/module.html
+
+
+
+
+

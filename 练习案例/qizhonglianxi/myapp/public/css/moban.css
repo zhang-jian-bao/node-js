@@ -1,0 +1,97 @@
+body, div, span, p, ul, li, ol {
+  margin: 0;
+  padding: 0;
+  list-style: none; }
+
+html {
+  height: 100%; }
+
+body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  font-size: 0.16rem;
+  line-height: 0.3rem; }
+
+.zjb-heard, .zjb-foot {
+  height: 0.4rem;
+  background: greenyellow; }
+
+.zj {
+  width: 6.8rem;
+  height: 10.22rem;
+  display: flex;
+  justify-content: space-between; }
+
+.left {
+  height: 10.22rem;
+  width: 1.62rem;
+  flex-grow: 1;
+  background: #ccc; }
+  .left .box {
+    height: 10.22rem;
+    overflow: hidden; }
+    .left .box .con {
+      min-height: 11rem; }
+      .left .box .con ul li {
+        height: 0.82rem;
+        text-align: center;
+        line-height: 0.82rem;
+        font-size: 0.22rem;
+        font-weight: bolder; }
+        .left .box .con ul li.one {
+          background: #fff; }
+
+.right {
+  width: 4.8rem;
+  height: 10.22rem;
+  flex-grow: 1;
+  background: red; }
+  .right .bo {
+    height: 10.22rem;
+    overflow: hidden; }
+    .right .bo .co {
+      min-height: 11rem; }
+      .right .bo .co .banner {
+        width: 4.82rem;
+        margin: 0.2rem auto; }
+        .right .bo .co .banner img {
+          width: 4.82rem;
+          height: 1.66rem;
+          border-radius: 0.17rem; }
+      .right .bo .co ul {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around; }
+        .right .bo .co ul li {
+          width: 1.02rem;
+          height: 1.48rem;
+          text-align: center; }
+          .right .bo .co ul li img {
+            width: 0.66rem;
+            height: 1rem;
+            display: block;
+            margin: 0 auto; }
+          .right .bo .co ul li a {
+            text-decoration: none;
+            font-size: 0.2rem;
+            font-weight: bolder;
+            color: #000;
+            display: block;
+            margin: 0.1rem 0; }
+
+.zjb-box {
+  height: 0;
+  flex-grow: 1;
+  overflow: hidden;
+  background: #eee; }
+  .zjb-box .zjb-con {
+    min-height: 101%;
+    background: #fff; }
+
+.aa {
+  width: 5rem;
+  height: 5rem;
+  background: #fff; }
+
+/*# sourceMappingURL=moban.css.map */

@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>后台</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        header,footer{
+            width:100%;
+            height:60px;
+            text-align: center;
+            line-height:60px;
+            font-size:20px;
+            font-weight:bolder;
+            background: #007aff;
+        }
+        nav{
+            width:100%;
+        }
+        nav ul{
+            background: #fe0036;
+            overflow: hidden;
+            line-height:60px;
+            width:100%;
+            margin:0 auto;
+        }
+        nav ul>li{
+            float: left;
+            width: 400px;
+            text-align: center;
+        }
+        nav ul>li.one{
+            color: floralwhite;
+            font-size:24px;
+            font-weight:bolder;
+        }
+        nav ol{
+            width:1000px;
+            height:400px;
+            margin:0 auto;
+        }
+        nav ol>li{
+            padding:40px 20px;
+            display: none;
+        }
+        nav ol>li.two{
+            display: block;
+        }
+        nav ol>li>input{
+            width:100%;
+            height:40px;
+            text-indent: 20px;
+            letter-spacing: 20px;
+        }
+        nav ol>li>h2{
+            margin-top:20px;
+        }
+        nav ol>li>button{
+            width:100%;
+            height:40px;
+            text-align: center;
+            border:none;
+            margin-top:20px;
+            background: blue;
+            font-size:20px;
+            font-weight:bolder;
+            outline-style: none;
+        }
+    </style>
+</head>
+<body>
+         <header>头部</header>
+          <nav>
+              <ul>
+                  <li class="one"> logo </li>
+                  <li>轮播图</li>
+                  <li>列表</li>
+              </ul>
+              <ol>
+                  <li class="two">
+                      <h1><mark>嗨！欢迎来到后台管理系统</mark></h1>
+                      <h2><mark>这里是后台系统</mark></h2>
+                  </li>
+                  <li>
+                      <input type="text" placeholder="请输入你要添加的图片路径" id="a"><br>
+                      <button id="ds">添加</button>
+                  </li>
+                  <li>
+                      <input type="text" placeholder="请输入你要添加的列表文章" id="b"><br>
+                      <button id="c">添加</button>
+                  </li>
+              </ol>
+          </nav>
+          <footer>底部</footer>
+</body>
+</html>
+<script src="js/jquery-3.4.1.js"></script>
+<script>
+    //轮播图和列表点击切换
+    $("nav>ul>li").click(function () {
+        $(this).addClass("one").siblings().removeClass("one");
+        var k=$(this).index();
+        $("nav>ol>li").eq(k).show().siblings().hide();
+    });
+    //点击轮播图添加图片路径
+    $("#ds").click(function () {
+        console.log("bbbb")
+        var a=$("#a").val().trim();
+        console.log(a);
+        $.ajax({
+            url:"http://localhost:8080/bb",
+            data:{
+                da:a
+            },
+            success: function (ret) {
+                console.log(ret);
+            },error: function (error) {
+                console.log(error+"图片添加错误")
+            }
+        })
+    })
+    //点击列表添加内容
+    $("#c").click(function () {
+        console.log("cccc")
+       var b=$("#b").val().trim();
+        console.log(b);
+        $.ajax({
+            url:"http://localhost:8080/cc",
+            data:{
+                da:b
+            },
+            success: function (ret) {
+                console.log(ret);
+            },error: function (error) {
+                console.log(error+"添加错误")
+            }
+        })
+    });
+</script>

@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>留言板练习</title>
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <style>
+    table{
+      margin: 100px auto;
+    }
+    table th{
+      text-align: center;
+    }
+    .box{
+      margin: 100px auto;
+    }
+  </style>
+</head>
+<body>
+     <div class="container">
+       <!--表单-->
+       <form class="box">
+         <div class="form-group">
+           <label for="xh">学号：</label>
+           <input type="text" class="form-control" id="xh" placeholder="请输入学号">
+         </div>
+         <div class="form-group">
+           <label for="xm">姓名：</label>
+           <input type="text" class="form-control" id="xm" placeholder="请输入姓名">
+         </div>
+         <div class="form-group">
+           <label for="nl">年龄：</label>
+           <input type="text" class="form-control" id="nl" placeholder="请输入年龄">
+         </div>
+         <div class="form-group">
+           <label for="dh">电话：</label>
+           <input type="text" class="form-control" id="dh" placeholder="请输入电话">
+         </div>
+
+         <button type="button" class="tj btn btn-default">提交</button>
+         <button type="reset" class="btn btn-default">重置</button>
+       </form>
+
+       <!--表格-->
+       <table class="table table-bordered text-center">
+         <thead>
+         <tr>
+           <th>学号</th>
+           <th>姓名</th>
+           <th>年龄</th>
+           <th>电话</th>
+           <th>操作</th>
+         </tr>
+         </thead>
+         <tbody>
+         <%for(var i=0;i<data.length;i++){%>
+           <tr>
+             <td><%=data[i].id%></td>
+             <td><%=data[i].name%></td>
+             <td><%=data[i].age%></td>
+             <td><%=data[i].tel%></td>
+             <td>
+               <!--通过后台获取的_id的值，每条数据都有一个单独的_id,后面的删除，修改可通过他来操作gg-->
+               <button v="<%=data[i]._id%>"  type="button" class="del btn btn-warning">删除</button>
+               <button type="button" class="xg btn btn-danger" data-toggle="modal" data-target="#myModal">修改</button>
+             </td>
+           </tr>
+         <%}%>
+<!--         <tr>-->
+<!--           <td>1</td>-->
+<!--           <td>张三</td>-->
+<!--           <td>18</td>-->
+<!--           <td>120</td>-->
+<!--           <td>-->
+<!--             <button type="button" class="del btn btn-warning">删除</button>-->
+<!--             <button type="button" class="xg btn btn-danger">修改</button>-->
+<!--           </td>-->
+<!--         </tr>-->
+         </tbody>
+         <tfoot>
+         <tr>
+           <td colspan="5">
+             <button type="button" class="delAll btn btn-warning">全部删除</button>
+           </td>
+         </tr>
+         </tfoot>
+       </table>
+       <!--模态框-->
+       <!-- Modal -->
+       <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+         <div class="modal-dialog" role="document">
+           <div class="modal-content">
+             <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+               <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+             </div>
+             <div class="modal-body">
+               <div class="form-group">
+                 <label for="xh">学号：</label>
+                 <input type="text" class="xh form-control" id="xh" placeholder="请输入学号">
+               </div>
+               <div class="form-group">
+                 <label for="xm">姓名：</label>
+                 <input type="text" class="xm form-control" id="xm" placeholder="请输入姓名">
+               </div>
+               <div class="form-group">
+                 <label for="nl">年龄：</label>
+                 <input type="text" class="nl form-control" id="nl" placeholder="请输入年龄">
+               </div>
+               <div class="form-group">
+                 <label for="dh">电话：</label>
+                 <input type="text" class="dh form-control" id="dh" placeholder="请输入电话">
+               </div>
+
+             </div>
+             <div class="modal-footer">
+               <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+               <button type="button" class="bc btn btn-primary" data-dismiss="modal">保存</button>
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
+
+</body>
+</html>
+<script src="js/jquery-3.4.1.js"></script>
+<script src="js/bootstrap.js"></script>
+<script>
+  //封装函数
+  function  add(){
+    //当成功返回数据时， 让tbody中的内容变空，在用ajax添加渲染
+    $("tbody").html("");
+    //利用ajax读取后台从数据库获取的数据
+    $.ajax({
+      url:"/api/read",
+      success:function (ret) {
+        var da=ret.data;
+        var str="";
+        for(var i in da){
+          str+=`<tr>
+             <td>${da[i].id}</td>
+             <td>${da[i].name}</td>
+             <td>${da[i].age}</td>
+             <td>${da[i].tel}</td>
+             <td>
+                <button v="${da[i]._id}"  type="button" class="del btn btn-warning">删除</button>
+                <button type="button" class="xg btn btn-danger" data-toggle="modal" data-target="#myModal">修改</button>
+             </td>
+                </tr>`
+        }
+        $("tbody").html(str);
+        //局部更新让上面的学号，姓名，年龄，电话框里的内容变空
+        $("#xh").val("");
+        $("#xm").val("");
+        $("#nl").val("");
+        $("#dh").val("");
+
+      },error:function (msg) {
+        console.log(msg);
+      }
+    })
+  }
+  //添加数据
+  $(".tj").click(function () {
+    //获取学号，姓名，年龄，电话的内容
+    var a=$("#xh").val();
+    var b=$("#xm").val();
+    var c=$("#nl").val();
+    var d=$("#dh").val();
+    $.ajax({
+      url:"/api/write",
+      data:{
+        id:a,
+        name:b,
+        age:c,
+        tel:d
+      },
+      success:function (ret) {
+        console.log(ret);
+        if(ret.code==0){
+         add();
+
+        }
+      },error:function (msg) {
+        console.log(msg);
+      }
+
+    })
+
+  });
+  //全部删除数据
+  $(".delAll").click(function () {
+    $.ajax({
+      url:"/api/delAll",
+      success:function (ret) {
+        console.log(ret);
+        if(ret.code==0){
+          add();
+        }
+      },error:function (msg) {
+        console.log(msg);
+      }
+
+    })
+
+  });
+  //单行删除数据  事件委托
+  $("tbody").on("click",".del",function () {
+    alert(111)
+    var a=$(this).attr("v");
+    alert(a);
+    $.ajax({
+      url:"/api/del",
+      data:{
+        _id:a
+      },
+      success:function (ret) {
+        console.log(ret);
+        if(ret.code==0){
+          add();
+        }
+      },
+      error:function (msg) {
+        console.log(msg);
+      }
+
+    })
+  });
+  //修改数据库数据   事件委托
+  $("tbody").on("click",".xg",function () {
+    //把删除的属性v，赋值给修改，修改在给保存按钮
+    var aa=$(this).siblings().attr("v");
+    $(".bc").attr("_id",aa);
+  });
+  //点击每行修改按钮就能修改内容
+  $('.bc').click(function () {
+    var a=$(this).attr("_id");
+    // alert(a);
+    var b=$(".xh").val();
+    var c=$(".xm").val();
+    var d=$(".nl").val();
+    var e=$(".dh").val();
+    $.ajax({
+      url:"/api/xg",
+      data:{
+        f:{
+          _id:a
+        },
+        aa:{
+          id:b,
+          name:c,
+          age:d,
+          tel:e
+        }
+      },
+      success:function (ret) {
+        console.log(ret)
+        if(ret.code==0){
+          add();
+          $(".xh").val("");
+          $(".xm").val("");
+          $(".nl").val("");
+          $(".dh").val("");
+        }
+      },error:function (msg) {
+        console.log(msg)
+      }
+    })
+
+  });
+
+
+</script>

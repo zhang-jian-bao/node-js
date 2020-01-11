@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .box{
+            width:400px;
+            height:400px;
+            margin:100px auto;
+            border: 1px solid #000;
+        }
+        #yh,#ps,button{
+            width:300px;
+            height:40px;
+            margin-top:20px;
+            text-indent: 20px;
+            letter-spacing: 10px;
+        }
+        #ps{
+            margin-left:16px;
+        }
+        button {
+            margin:40px 70px;
+            border:none;
+            outline-style: none;
+            background: orange;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <form action="http://localhost:3000">
+        <label for="yh">用户名：</label>
+        <input type="text" placeholder="请输入用户名" id="yh"><br>
+        <label for="ps">密码：</label>
+        <input type="text" placeholder="请输入密码" id="ps"><br>
+        <button id="btn">登录</button>
+    </form>
+</div>
+</body>
+</html>
+<script src="js/jquery-3.4.1.js"></script>
+<script>
+    $("#btn").click(function () {
+        var yh=$("#yh").val();
+        var ps=$("#ps").val();
+        console.log(yh,ps);
+        $.ajax({
+            type:"POST",
+            url:"/api/log",
+            data:{
+                name:yh,
+                pass:ps
+            },success: function (ret) {
+                console.log(ret+"登录成功");
+            },error: function (error) {
+                console.log(error+"登录失败")
+            }
+        })
+    })
+</script>

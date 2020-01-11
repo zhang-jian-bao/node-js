@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <p><label for="yhm">用户名</label>
+        <input type="text" name="use" id="yhm">
+    </p>
+    <p>
+        <label for="mm">密码</label>
+        <input type="text" name="pass" id="mm">
+    </p>
+    <input id="btn" type="button" value="登录">
+
+</body>
+</html>
+<script src="js/jquery-3.4.1.js"></script>
+<script>
+    $("#btn").click(function () {
+        //获取用户名和密码的内容
+        var yhm=$("#yhm").val();
+        var mm=$("#mm").val();
+        $.ajax({
+            type:"post",
+            url:"http://localhost:9090",
+            data:{
+                name:yhm,
+                mm:mm
+            },
+            success: function (ret) {
+                console.log(ret);
+                if(ret=="登录成功"){
+                    alert("登录成功!");
+                }else{
+                    alert("登录失败！")
+                }
+            }
+        })
+    })
+</script>

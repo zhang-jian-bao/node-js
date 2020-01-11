@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{margin: 0; padding: 0;}
+
+        #wrap{width: 800px; margin: 30px auto; background: #fff;}
+        #wrap table{margin-top:20px;width: 100%; border:1px solid #ccc; border-spacing: 0; border-collapse: collapse;}
+        #wrap table tr th,  #wrap table tr td{border:1px solid #ccc; padding: 15px 0; text-align: center;}
+
+        #wrap .group{border-bottom:1px solid #ccc; padding:20px 0;}
+        #wrap .group p{padding: 10px 0;}
+        #wrap .group label{display: block; color: #666; font-size: 14px;}
+        #wrap .group input, #wrap .group select, #wrap .group button{width: 100%; text-indent: 2em; margin-top: 5px; height: 33px; border-radius: 3px;  border: 1px solid #ccc;}
+    </style>
+</head>
+<body>
+
+    <div id="wrap">
+
+        <div class="group">
+            <p>
+                <label for="">学号</label>
+                <input id="num" type="text" placeholder="请输入学号">
+            </p>
+            <p>
+                <label for="">姓名</label>
+                <input id="name" type="text" placeholder="请输入姓名">
+            </p>
+            <p>
+                <label for="">年龄</label>
+                <input id="age" type="text" placeholder="请输入年龄">
+            </p>
+            <p>
+                <label for="">性别</label>
+                <select name="" id="sex">
+                    <option value="男">男</option>
+                    <option value="女">女</option>
+                </select>
+            </p>
+            <p>
+                <button>提交</button>
+            </p>
+        </div>
+
+        <table>
+            <tr>
+                <th>学号</th>
+                <th>姓名</th>
+                <th>年龄</th>
+                <th>性别</th>
+            </tr>
+            <%for(var i=0;i<user.length;i++){%>
+                <tr>
+                    <td><%= user[i].id%></td>
+                    <td><%= user[i].name%></td>
+                    <td><%= user[i].age%></td>
+                    <td><%= user[i].sex%></td>
+                </tr>
+            <%}%>
+        </table>
+
+    </div>
+
+</body>
+</html>
+<script src="js/jquery-1.11.2.min.js"></script>
+<script>
+    //等待页面所有dom元素加载完毕之后在执行
+    $(function () {
+        $("button").click(function () {
+            //获取学号
+            var num = $("#num").val();
+            //获取姓名
+            var name = $("#name").val();
+            //获取年龄
+            var age = $("#age").val();
+            //获取性别
+            var sex = $("#sex").val();
+
+            //通过ajax发送到后台
+            $.ajax({
+                url : "/api/register",
+                data : {
+                    id : num,
+                    name : name,
+                    age : age,
+                    sex : sex
+                },
+                success : function (resposne) {
+                    console.log(response)
+
+                },
+                error : function (error) {
+                    console.log(error);
+                }
+            })
+        })
+    })
+
+</script>

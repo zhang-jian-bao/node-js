@@ -1,0 +1,80 @@
+body, div, span, h3, h4, p, ul, li, ol {
+  margin: 0;
+  padding: 0;
+  list-style: none; }
+
+html {
+  height: 100%; }
+
+body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  font-size: 0.16rem;
+  line-height: 0.3rem; }
+
+.zjb-heard {
+  height: 0.4rem;
+  background: greenyellow; }
+
+.zjb-box {
+  height: 100%;
+  flex-grow: 1;
+  overflow: hidden;
+  background: #eee; }
+  .zjb-box .zjb-con {
+    min-height: 101%;
+    background: #fff; }
+
+.qh {
+  width: 4.8rem;
+  flex-grow: 1; }
+
+.zjb-foot {
+  height: 0.4rem; }
+  .zjb-foot ul {
+    display: flex;
+    justify-content: space-around; }
+    .zjb-foot ul li {
+      text-align: center;
+      width: 25%;
+      font-size: 0.2rem; }
+      .zjb-foot ul li.active {
+        background: orange;
+        font-weight: bolder;
+        color: red; }
+
+.banner {
+  height: 2rem; }
+  .banner img {
+    width: 4.8rem;
+    height: 2rem; }
+
+.list {
+  height: 6rem; }
+  .list ul {
+    padding: 0.2rem 0;
+    border: 1px solid #000;
+    width: 4.5rem;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: 0 auto; }
+    .list ul li {
+      padding: 0 0.2rem;
+      width: 1.8rem;
+      height: 2.5rem;
+      border: 1px solid #000; }
+      .list ul li img {
+        width: 1.8rem;
+        height: 1.4rem; }
+      .list ul li b {
+        font-size: 0.16rem;
+        color: #ccc; }
+      .list ul li p {
+        color: red; }
+
+.zz {
+  display: none; }
+
+/*# sourceMappingURL=index.css.map */

@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"><!--强制让文档与设备的宽度保持1：1-->
+<!--注意：实际测试中发现，HTC G7自身系统浏览器不支持这一条规则，能够对页面进行放大，一旦放大响应的box也随之放大，导致俄页面出现错乱问题，解决方法：定义页面的最小宽度 min-width,body{min-width: 300px;}-->
+<meta name="apple-mobile-web-app-capable" content="yes" /><!--网站开启对web app程序的支持-->
+<meta name="apple-mobile-web-app-status-bar-style" content="black" /><!--在web app应用下状态条（屏幕顶部条）的颜色-->
+<meta content="telephone=no" name="format-detection" /><!--则手机号码不被显示为拨号链接-->
+<title>结算页</title>
+<!--样式表-->
+<link type="text/css" rel="stylesheet" href="css/base.css">
+<link type="text/css" rel="stylesheet" href="css/index.css">
+<link type="text/css" rel="stylesheet" href="css/media.css">
+<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="js/base.js"></script>
+</head>
+<body>
+	<div class="content">
+        <h3 class="header_h3 tc f18 fb"><a class="out_a fl pl15 f20 pr20" href="#">&lt;</a>结算页</h3>
+        <div class="boxCon clearfix backgroundFFFFFF m15">
+            <h3 class="addressH3 f13 color666 pl10">收货人信息</h3>
+            <p class="settP pl10 pr10 pb5 f13 lineH180 mt10" style="display:none;">王克颍， 13052565575，上海 上海市 闸北区 芷江西路街道 南山路98号上海祥先实业有限公司 ，000000 </p>
+            <a class="addto clearfix ml10 mr10 dis_biock" href="#">
+            	<span class="addtoSpan_a fl color888 f13">点击选择收货地址</span>
+                <span class="addtoSpan_b fr"></span>
+            </a>
+        </div>
+        <!-- boxCon end -->
+        <div class="boxCon clearfix backgroundFFFFFF m15 mt0">
+            <h3 class="addressH3 f13 color666 pl10 mb10">商品列表</h3>
+            <div class="boxCon clearfix backgroundFFFFFF m10">
+                <dl class="boxCon_spDl clearfix orderDl m10">
+                    <dt class="fl mr10"><a class="dis_biock" href="#"><img src="images/Gs4.jpg"></a></dt>
+                    <dd class="ml90">
+                        <a class="title_A fb" href="#">罗莱罗马时光四件套AY054-4颜色花色随机</a>
+                        <p class="unit_p f14 mt4">积分：<span class="colorcc0000 fb">￥198</span></p>
+                        <p class="unit_p f14 mt4">数量：<span class="colorcc0000 fb">2个</span></p>
+                    </dd>
+                </dl>
+            </div>
+            <!-- boxCon end -->
+            <div class="boxCon clearfix backgroundFFFFFF m10">
+                <dl class="boxCon_spDl clearfix orderDl m10">
+                    <dt class="fl mr10"><a class="dis_biock" href="#"><img src="images/Gs5.jpg"></a></dt>
+                    <dd class="ml90">
+                        <a class="title_A fb" href="#">罗莱罗马时光四件套</a>
+                        <p class="unit_p f14 mt4">积分：<span class="colorcc0000 fb">￥168</span></p>
+                        <p class="unit_p f14 mt4">数量：<span class="colorcc0000 fb">1套</span></p>
+                    </dd>
+                </dl>
+            </div>
+            <!-- boxCon end -->
+        </div>
+        <!-- boxCon end -->
+        <div class="boxCon clearfix backgroundFFFFFF m15">
+            <h3 class="addressH3 f13 color666 pl10">配送方式</h3>
+            <div class="clearfix m10 f13">
+                <p class="fl">普通配送（物流费用）</p>
+                <span class="fr colorcc0000 fb">5.00</span>
+            </div>
+        </div>
+        <!-- boxCon end -->
+        <div class="endDiv pr mt15 ml15 mr15"><div class="pa"></div></div>
+        <div class="boxCon clearfix backgroundFFFFFF m15 p15">
+            <div class="clearfix f15">
+            	<p class="fl">商品总额</p>
+                <span class="fr fb">￥280.00</span>
+            </div>
+            <div class="clearfix f15 mt10">
+            	<p class="fl">物流费用</p>
+                <span class="fr fb">5.00</span>
+            </div>
+            <div class="clearfix f15 mt10">
+            	<p class="fl">应付总额</p>
+                <span class="fr fb colorcc0000">￥285.00</span>
+            </div>
+        </div>
+        <!-- boxCon end -->
+        <a class="putA dis_biock m15 tc f15 colorfff" href="#">提交订单</a>
+        
+        
+        
+		<div class="footer w100">
+            <p class="footer_p"><a class="footer_p_a" href="#"><span class="footSpan_a"></span>首页</a></p>
+            <p class="footer_p"><a class="footer_p_a" href="#"><span class="footSpan_b"></span>搜索</a></p>
+            <p class="footer_p"><a class="footer_p_a" href="#"><span class="footSpan_c"><em class="calrEm">0</em></span>购物车</a></p>
+            <p class="footer_p"><a class="footer_p_a" href="#"><span class="footSpan_d"></span>我的</a></p>
+        </div> 
+        <!-- footer end -->       
+	</div>
+    <!-- content end -->
+</body>
+</html>

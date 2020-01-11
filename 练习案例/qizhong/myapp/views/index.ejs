@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,
+  minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title>其中</title>
+  <link rel="stylesheet" href="css/swiper-3.4.2.min.css">
+  <link rel="stylesheet" href="css/index.css">
+  <script src="js/iscroll-probe.js"></script>
+  <script src="js/rem .js"></script>
+  <script src="js/swiper-3.4.2.min.js"></script>
+</head>
+<body>
+      <div class="head">
+        <img src="img/aa_01.jpg" alt="">
+      </div>
+      <div class="box">
+        <div class="con">
+          <img src="img/aa_03.jpg" alt="">
+          <img src="img/aa_05.jpg" alt="">
+          <img src="img/aa_07.jpg" alt="">
+          <div class="top">
+            <ul>
+              <%for(var i=0;i<dd.length;i++){%>
+              <li><img src="<%= dd[i].img%>" alt=""><a href=""><%= dd[i].text%></a></li>
+              <%}%>
+              <!--<li><img src="img/aa_09_03.jpg" alt=""><a href="">我的预约</a></li>-->
+              <!--<li><img src="img/aa_09_05.jpg" alt=""><a href="">我的预约</a></li>-->
+              <!--<li><img src="img/aa_09_07.jpg" alt=""><a href="">我的预约</a></li>-->
+              <!--<li><img src="img/aa_09_09.jpg" alt=""><a href="">我的预约</a></li>-->
+              <!--<li><img src="img/aa_09_15.jpg" alt=""><a href="">我的预约</a></li>-->
+              <!--<li><img src="img/aa_09_16.jpg" alt=""><a href="">我的预约</a></li>-->
+              <!--<li><img src="img/aa_09_17.jpg" alt=""><a href="">我的预约</a></li>-->
+              <!--<li></li>-->
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="foot">
+        <img src="img/aa_11.jpg" alt="">
+      </div>
+</body>
+</html>
+<script src="js/jquery-3.4.1.js"></script>
+<script>
+       document.addEventListener("touchmove", function (e) {
+         e.preventDefault();
+       },{passive:false})
+       var box=new IScroll(".box",{});
+</script>

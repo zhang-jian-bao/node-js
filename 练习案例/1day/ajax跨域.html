@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ajax跨域</title>
+</head>
+<body>
+<button>点击</button>
+</body>
+</html>
+  <script src="js/jquery-3.4.1.js"></script>
+  <script>
+    $("button").click(function () {
+//        alert(111)
+        $.ajax({
+            type:"get",
+            url:"http://localhost:8040/",
+            async:true,
+            success: function (ret) {
+                console.log(ret);
+            },error: function (msg) {
+                console.log("失败");
+            }
+        })
+    })
+//      document.querySelector('button').onclick= function () {
+//          alert(111);
+//          var h=new XMLHttpRequest();
+//          h.open("get","http://localhost:8040",true);
+//          h.send();
+//          h.onreadystatechange= function () {
+//              if(h.readyState==4&& h.status==200){
+//                  var dat= h.responseText;
+//                  console.log(dat);
+//              }
+//          }
+//      }
+  </script>

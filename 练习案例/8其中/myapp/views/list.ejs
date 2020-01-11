@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>列表页面</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        table{
+            margin: 100px auto;
+            position: relative;
+        }
+        table th{
+            text-align: center;
+        }
+        .box>ul>li{
+            display: none;
+        }
+        .box>ul>li.active{
+            display: block;
+        }
+        .an>span{
+            display: block;
+            width: 60px;
+            height: 30px;
+            text-align: center;
+            line-height: 30px;
+            background: #ccc;
+            font-size: 20px;
+            position: absolute;
+            right: 108px;
+        }
+        .an>span:nth-child(1){
+            right: 300px;
+        }
+        .xyd>ol{
+            position: absolute;
+            /*width: 60px;*/
+            height: 30px;
+            text-align: center;
+            line-height: 30px;
+            overflow: hidden;
+            right: 190px;
+        }
+        .xyd>ol>li{
+            float: left;
+            margin-left: 10px;
+            background: #ccc;
+            width: 20px;
+            font-size: 20px;
+            /*line-height: 20px;*/
+        }
+        .xyd>ol>li.one{
+            background: orange;
+        }
+    </style>
+</head>
+<body>
+          <div class="container box">
+              <!--搜索框页面-->
+              <input type="text" class="ss">
+              <!--列表页面-->
+              <ul>
+                  <li class="active">
+                      <table  class="table table-striped text-center">
+                         <thead>
+                         <tr>
+                             <th>姓名</th>
+                             <th>性别</th>
+                             <th>年龄</th>
+                             <th>电话</th>
+                             <th>时间</th>
+                             <th>操作</th>
+                         </tr>
+                         </thead>
+                          <tbody>
+                          <%for(var i=0;i<data.length;i++){%>
+                          <tr>
+                              <td><%=data[i].name%></td>
+                              <td><%=data[i].sex%></td>
+                              <td><%=data[i].age%></td>
+                              <td><%=data[i].tel%></td>
+                              <td><%=data[i].date%></td>
+                              <td>
+                                  <button type="button" class="del btn btn-warning">删除</button>
+
+                                  <button type="button" class="edit btn btn-danger">编辑</button>
+                              </td>
+                          </tr>
+                          <%}%>
+                          <!--                          <tr>-->
+                          <!--                              <td>李四</td>-->
+                          <!--                              <td>男</td>-->
+                          <!--                              <td>19</td>-->
+                          <!--                              <td>110</td>-->
+                          <!--                              <td>2019-10-15</td>-->
+                          <!--                              <td>-->
+                          <!--                                  <button type="button" class="del btn btn-warning">删除</button>-->
+
+                          <!--                                  <button type="button" class="edit btn btn-danger">编辑</button>-->
+                          <!--                              </td>-->
+                          <!--                          </tr>-->
+                          </tbody>
+                      </table>
+                  </li>
+                  <li>
+                      <table  class="table table-striped text-center">
+                        <thead>
+                        <tr>
+                            <th>姓名</th>
+                            <th>性别</th>
+                            <th>年龄</th>
+                            <th>电话</th>
+                            <th>时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                         <tbody>
+                         <tr>
+                             <td>张三</td>
+                             <td>男</td>
+                             <td>19</td>
+                             <td>110</td>
+                             <td>2019-10-15</td>
+                             <td>
+                                 <button type="button" class="del btn btn-warning">删除</button>
+
+                                 <button type="button" class="edit btn btn-danger">编辑</button>
+                             </td>
+                         </tr>
+                         </tbody>
+                      </table>
+                  </li>
+                  <li>
+                      <table  class="table table-striped text-center">
+                         <thead>
+                         <tr>
+                             <th>姓名</th>
+                             <th>性别</th>
+                             <th>年龄</th>
+                             <th>电话</th>
+                             <th>时间</th>
+                             <th>操作</th>
+                         </tr>
+                         </thead>
+                          <tbody>
+                          <tr>
+                              <td>王五</td>
+                              <td>男</td>
+                              <td>19</td>
+                              <td>110</td>
+                              <td>2019-10-15</td>
+                              <td>
+                                  <button type="button" class="del btn btn-warning">删除</button>
+
+                                  <button type="button" class="edit btn btn-danger">编辑</button>
+                              </td>
+                          </tr>
+                          </tbody>
+                      </table>
+                  </li>
+              </ul>
+              <!--上一页，下一页页面-->
+              <div class="an">
+                 <span>上一页</span>
+                  <span>下一页</span>
+              </div>
+              <!--1,2,3按钮页面-->
+              <div class="xyd">
+                  <ol>
+                      <li class="one">1</li>
+                      <li>2</li>
+                      <li>3</li>
+                  </ol>
+              </div>
+
+          </div>
+
+</body>
+</html>
+<script src="js/jquery-3.4.1.js"></script>
+<script src="js/bootstrap.js"></script>
+<script>
+   //点击1,2,3按钮
+    $(".xyd>ol>li").click(function () {
+        // alert(11)
+        $(this).addClass("one").siblings().removeClass("one");
+        //获取按钮的当前下标
+        var i=$(this).index();
+        $(".box>ul>li").eq(i).addClass("active").siblings().removeClass("active");
+    });
+    //点击上一页
+   var index=0;
+    $(".an>span:eq(0)").click(function () {
+        index--;
+        if(index<=-1){
+            index=2
+        }
+        $(".box>ul>li").eq(index).addClass("active").siblings().removeClass("active");
+        $(".xyd>ol>li").eq(index).addClass("one").siblings().removeClass("one");
+    });
+    //点击下一页页
+   $(".an>span:eq(1)").click(function () {
+       index++;
+       if(index>=3){
+           index=0
+       }
+       $(".box>ul>li").eq(index).addClass("active").siblings().removeClass("active");
+       $(".xyd>ol>li").eq(index).addClass("one").siblings().removeClass("one");
+   });
+
+   //从数据库找到数据，在渲染到页面
+   $(function () {
+       //封装函数，局部渲染页面
+
+       function add(){
+           $.ajax({
+               url:"/api/read",
+               success:function (ret) {
+                   console.log(ret)
+                   if(ret.code==0){
+                       $("tbody").html("");
+                       var data=ret.data;
+                       var str="";
+                       // var a=new Date();
+                       // var t=a.toLocaleString();
+                       // var td=$("<td>"+'t'+"</td>");
+
+                       // alert(t);
+                       for(var i in data){
+                           str+=` <tr>
+                                  <td>${data[i].name}</td>
+                                  <td>${data[i].sex}</td>
+                                  <td>${data[i].age}</td>
+                                  <td>${data[i].tel}</td>
+                                  <td>${data[i].date}</td>
+                                  <td>
+                                      <button v="${data[i]._id}" type="button" class="del btn btn-warning">删除</button>
+
+                                      <button type="button" class="edit btn btn-danger">编辑</button>
+                                  </td>
+                              </tr>`
+                       }
+                       $("tbody").html(str);
+                   }
+               },error:function (msg) {
+                   console.log(msg)
+               }
+           });
+       }
+       //添加
+      add();
+
+       //单行删除，局部更新渲染，要事件委托
+       $("tbody").on("click",".del",function () {
+           //获取当前每行的_id，数据库中每行都有一个唯一的_id值
+           var a=$(this).attr("v");
+           $.ajax({
+               url:"/api/del",
+               data:{
+                   _id:a
+               },
+               success:function (ret) {
+                   console.log(ret)
+                   if(ret.code==0){
+                      add();
+                   }
+               },error:function (msg) {
+                   console.log(msg)
+               }
+           })
+       });
+
+       //edit点击修改按钮跳转页面,局部渲染，事件委托
+       $("tbody").on("click",".edit",function () {
+           var name=$(this).siblings().attr("v");
+           location.href="/edit?_id="+name
+       })
+
+       //搜索框
+      document.onkeydown=function (e) {
+          // alert(e.keyCode)
+          //敲回车搜索内容
+          if(e.keyCode=="13"){
+             var ss=$(".ss").val();
+             $.ajax({
+                 url:"/api/search",
+                 data:{
+                     name:ss
+                 },
+                 success:function (ret) {
+                     console.log(ret)
+                     if(ret.code==0){
+                         $("tbody").html("");
+                         var data=ret.data;
+                         var str="";
+                         // var a=new Date();
+                         // var t=a.toLocaleString();
+                         // var td=$("<td>"+'t'+"</td>");
+
+                         // alert(t);
+                         for(var i in data){
+                             str+=` <tr>
+                                  <td>${data[i].name}</td>
+                                  <td>${data[i].sex}</td>
+                                  <td>${data[i].age}</td>
+                                  <td>${data[i].tel}</td>
+                                  <td>${data[i].date}</td>
+                                  <td>
+                                      <button v="${data[i]._id}" type="button" class="del btn btn-warning">删除</button>
+
+                                      <button type="button" class="edit btn btn-danger">编辑</button>
+                                  </td>
+                              </tr>`
+                         }
+                         $("tbody").html(str);
+                     }
+                 },error:function (msg) {
+
+                 }
+             })
+          }
+      };
+
+       //动态搜索框、、input事件也叫绑定事件
+       $(".ss").on("input",function () {
+           if($(this).val()==""){
+               add();
+           }else{
+               $.ajax({
+                   url:"/api/mh",
+                   data:{
+                       name:$(this).val().trim()
+                   },
+                   success:function (ret) {
+                       console.log(ret)
+                       if(ret.code==0){
+                           $("tbody").html("");
+                           var data=ret.data;
+                           var str="";
+                           // var a=new Date();
+                           // var t=a.toLocaleString();
+                           // var td=$("<td>"+'t'+"</td>");
+
+                           // alert(t);
+                           for(var i in data){
+                               str+=` <tr>
+                                  <td>${data[i].name}</td>
+                                  <td>${data[i].sex}</td>
+                                  <td>${data[i].age}</td>
+                                  <td>${data[i].tel}</td>
+                                  <td>${data[i].date}</td>
+                                  <td>
+                                      <button v="${data[i]._id}" type="button" class="del btn btn-warning">删除</button>
+
+                                      <button type="button" class="edit btn btn-danger">编辑</button>
+                                  </td>
+                              </tr>`
+                           }
+                           $("tbody").html(str);
+                       }
+                   },error:function (msg) {
+                       console.log(msg)
+                   }
+               })
+           }
+       })
+
+   })
+</script>

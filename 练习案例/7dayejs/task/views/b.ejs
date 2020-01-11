@@ -1,0 +1,21 @@
+<!--头部引入-->
+<% include ../comman/head.ejs %>
+
+<h1><mark>这是b.ejs文件2222</mark></h1>
+<!--<ul>
+    <li> <%= tak%> </li>直接添加
+</ul>-->
+<!--循环-->
+<ul>
+    <%for(var i=0;i<tak.length;i++){%>
+    <li> <%=tak[i]%> </li>
+    <%}%>
+</ul>
+<!--判断-->
+<%if(fig){%>
+<mark>嗨，请登录</mark>
+<%}else{%>
+<mark>请先注册</mark>
+<%}%>
+<!--底部引入-->
+<% include ../comman/foot.ejs %>

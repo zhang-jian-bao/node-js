@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>数据库练习3</title>
+    <style>
+      table{
+        width:800px;
+        height:40px;
+        text-align: center;
+        border-spacing: 0;
+        border-collapse: collapse;
+        margin:100px auto;
+      }
+      .box{
+        width:800px;
+        margin:100px auto;
+      }
+    </style>
+  </head>
+  <body>
+  <div class="box">
+    <p>
+      <label for="a">学号：</label>
+      <input type="text" placeholder="请输入学号" id="a">
+    </p>
+    <p>
+      <label for="b">姓名：</label>
+      <input type="text" placeholder="请输入姓名" id="b">
+    </p>
+    <p>
+      <label for="c">年龄：</label>
+      <input type="text" placeholder="请输入年龄" id="c">
+    </p>
+    <p>
+      <label for="d">电话：</label>
+      <input type="text" placeholder="请输入电话" id="d">
+    </p>
+    <button id="bt">添加</button>
+    <p>
+      <input type="text" placeholder="请输入学号删除" id="aa">
+      <button id="bb">删除</button>
+    </p>
+    <p>
+      <input type="text" placeholder="要修改的姓名" id="cc">
+      <input type="text" placeholder="修改后的姓名" id="dd">
+      <button id="ee">修改</button>
+    </p>
+  </div>
+      <table  border="1">
+        <tr>
+          <th>学号</th>
+          <th>姓名</th>
+          <th>年龄</th>
+          <th>电话</th>
+          <th>操作</th>
+        </tr>
+       <%for(var i=0;i<dd.length;i++){%>
+        <tr>
+          <td><%= dd[i].id%></td>
+          <td><%= dd[i].name%></td>
+          <td><%= dd[i].age%></td>
+          <td><%= dd[i].tel%></td>
+          <td><input type="button" value="删除" id="btt"></td>
+        </tr>
+        <%}%>
+      </table>
+  </body>
+</html>
+<script src="js/jquery-3.4.1.js"></script>
+<script>
+  //添加
+  $("#bt").click(function () {
+    var a=$("#a").val();
+    var b=$("#b").val();
+    var c=$("#c").val();
+    var d=$("#d").val();
+    if(a==""||b==""||c==""||d==""){
+      alert("内容不能为空！")
+    }else if(a==""){
+      alert("请输入学号")
+    }else if(b==""){
+      alert("请输入姓名")
+    }else if(c==""){
+      alert("请输入年龄")
+    }else if(d==""){
+      alert("请输入电话")
+    }else{
+      $.ajax({
+        url:"/tj",
+        data:{
+          id:a,
+          name:b,
+          age:c,
+          tel:d
+        },
+        success: function (ret) {
+          console.log(ret);
+          if(ret=="添加成功"){
+            location.href="/"
+          }
+        },error: function (error) {
+          console.log(error)
+        }
+      })
+    }
+  });
+  //删除
+  $("#bb").click(function () {
+    var aa=$("#aa").val();
+    if(aa==""){
+      alert("内容不能为空！")
+    }else{
+      $.ajax({
+        url:"/sc",
+        data:{
+          id:aa
+        },
+        success: function (ret) {
+          console.log(ret)
+          if(ret=="删除成功"){
+            location.href="/"
+          }
+        },error: function (error) {
+          console.log(error)
+        }
+      })
+    }
+  });
+  //修改
+  $("#ee").click(function () {
+    var cc=$("#cc").val();
+    var dd=$("#dd").val();
+    if(cc==""||dd==""){
+      alert("内容不能为空")
+    }else if(cc==""){
+      alert("内容不能为空1")
+    }else if(dd==""){
+      alert("内容不能为空2")
+    }else{
+      $.ajax({
+        url:"/xg",
+        data:{
+          list1:{
+            name:cc
+          },
+          list2:{
+            name:dd
+          }
+        },
+        success: function (ret) {
+          console.log(ret);
+          if(ret=="修改成功"){
+            location.href="/"
+          }
+        },error: function (error) {
+          console.log(error)
+        }
+      })
+    }
+  });
+
+</script>

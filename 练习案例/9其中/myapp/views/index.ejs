@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>练习</title>
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <style>
+    .box{
+      margin: 100px auto;
+    }
+    table{
+      margin: 100px auto;
+    }
+    table th{
+      text-align: center;
+    }
+    .ad{
+      margin: 20px 20px;
+      display: flex;
+    }
+    .pa,.pb{
+      width: 60px;
+      height: 40px;
+      text-align: center;
+      line-height: 40px;
+      background: greenyellow;
+      font-size: 20px;
+      font-weight: bolder;
+    }
+    .pp>span{
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      font-size: 20px;
+      font-weight: bolder;
+      background: #ccc;
+      margin: 10px 2px;
+      text-align: center;
+      line-height: 20px;
+    }
+    /*.pc{*/
+    /*  background: orange;*/
+    /*}*/
+  </style>
+</head>
+<body>
+           <div class="container box">
+             <!--表单-->
+             <form>
+               <div class="form-group">
+                 <label for="xh">学号：</label>
+                 <input type="text" class="form-control" id="xh" placeholder="请输入学号">
+               </div>
+               <div class="form-group">
+                 <label for="xm">姓名：</label>
+                 <input type="text" class="form-control" id="xm" placeholder="请输入姓名">
+               </div>
+               <div class="form-group">
+                 <label for="nl">年龄：</label>
+                 <input type="text" class="form-control" id="nl" placeholder="请输入年龄">
+               </div>
+               <div class="form-group">
+                 <label for="xb">性别：</label>
+                 <input type="radio" name="sex" value="男" class="nan" checked> 男
+                 <input type="radio" name="sex" value="女"> 女
+               </div>
+               <div class="form-group">
+                 <label for="bj">班级：</label>
+                 <div >
+                 <select name="" id="bj"  class="form-control">
+                   <option value="请选择班级">请选择班级</option>
+                   <option value="1904A">1904A</option>
+                   <option value="1905A">1905A</option>
+                   <option value="1906A">1906A</option>
+                 </select>
+                 </div>
+               </div>
+
+
+               <button type="button" class="add form-control btn btn-primary">添加</button>
+
+
+             </form>
+             <div class="form-group">
+               <label for="cz">姓名：</label>
+               <input type="text" class="form-control" id="cz" placeholder="请输入查找的姓名，并敲击回车搜索">
+             </div>
+
+             <!--表格-->
+             <div class="ad">
+              <p class="pa">上一页</p>
+               <p class="pp">
+<!--                 <span class="pc">1</span>-->
+                 <%a=1%>
+                 <%for(var k=0;k<data.length;k++){%>
+
+                 <%if(k%2==0){%>
+
+                 <span><%=a%></span>
+                 <%a++%>
+                 <%}%>
+                 <%}%>
+               </p>
+               <p class="pb">下一页</p>
+             </div>
+             <table class="table table-striped table-bordered text-center">
+                  <thead>
+                       <tr>
+                         <th>学号</th>
+                         <th>姓名</th>
+                         <th>年龄</th>
+                         <th>性别</th>
+                         <th>班级</th>
+                         <th>时间</th>
+                         <th>操作</th>
+                       </tr>
+                  </thead>
+                   <tbody>
+                  <%for(var i=0;i<data.length;i++){%>
+                    <%if(i<2){%>
+                      <tr>
+                        <td><%= data[i].id%></td>
+                        <td><%= data[i].name%></td>
+                        <td><%= data[i].age%></td>
+                        <td><%= data[i].sex%></td>
+                        <td><%= data[i].class%></td>
+                        <td><%= data[i].date%></td>
+                        <td>
+                          <button v="<%= data[i]._id%>" type="button" class="del btn btn-warning">删除</button>
+
+                          <button type="button" class="edit btn btn-danger" data-toggle="modal" data-target="#myModal">编辑</button>
+                        </td>
+                      </tr>
+                      <%}%>
+
+                   <%}%>
+                   </tbody>
+                   <tfoot>
+                   <tr>
+                     <td colspan="7">
+                       <button type="button" class="delAll btn btn-warning">全部删除</button>
+                     </td>
+                   </tr>
+                   </tfoot>
+             </table>
+
+
+             <!--模态框-->
+             <div class="modal fade" tabindex="-1" role="dialog" id="myModal" >
+               <div class="modal-dialog" role="document">
+                 <div class="modal-content">
+                   <div class="modal-header">
+                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                     <h4 class="modal-title">修改数据</h4>
+                   </div>
+                   <div class="modal-body">
+                     <div class="form-group">
+                       <label for="xh">学号：</label>
+                       <input type="text" class="xh form-control" id="xh" placeholder="请输入学号">
+                     </div>
+                     <div class="form-group">
+                       <label for="xm">姓名：</label>
+                       <input type="text" class="xm form-control" id="xm" placeholder="请输入姓名">
+                     </div>
+                     <div class="form-group">
+                       <label for="nl">年龄：</label>
+                       <input type="text" class="nl form-control" id="nl" placeholder="请输入年龄">
+                     </div>
+                     <div class="form-group ccc">
+                       <label for="xb">性别：</label>
+                       <input type="radio" name="sex" value="男" class="man" checked> 男
+                       <input type="radio" name="sex" value="女"> 女
+                     </div>
+                     <div class="form-group">
+                       <label for="bj">班级：</label>
+                       <div >
+                         <select name="" id="bj"  class="bj form-control">
+                           <option value="请选择班级">请选择班级</option>
+                           <option value="1904A">1904A</option>
+                           <option value="1905A">1905A</option>
+                           <option value="1906A">1906A</option>
+                         </select>
+                       </div>
+                     </div>
+
+                   </div>
+                   <div class="modal-footer">
+                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                     <button type="button" class="bc btn btn-primary" data-dismiss="modal">保存</button>
+                   </div>
+                 </div><!-- /.modal-content -->
+               </div><!-- /.modal-dialog -->
+             </div><!-- /.modal -->
+           </div>
+
+</body>
+</html>
+<script src="js/jquery-3.4.1.js"></script>
+<script src="js/bootstrap.js"></script>
+<script>
+
+  $(function () {
+    //分装函数
+    function add() {
+      $("tbody").html("");
+      $.ajax({
+        url:"/read",
+        success:function (ret) {
+          console.log(ret)
+          if(ret.code==0){
+            var da=ret.data;
+            var str="";
+            for(var i in da){
+              str+=`   <tr>
+                      <td>${da[i].id}</td>
+                      <td>${da[i].name}</td>
+                      <td>${da[i].age}</td>
+                      <td>${da[i].sex}</td>
+                      <td>${da[i].class}</td>
+                      <td>${da[i].date}</td>
+                      <td>
+                        <button v="${da[i]._id}" type="button" class="del btn btn-warning">删除</button>
+
+                        <button type="button" class="edit btn btn-danger" data-toggle="modal" data-target="#myModal">编辑</button>
+                      </td>
+                    </tr>`
+            }
+            $("tbody").html(str);
+            $("#xh").val("");
+            $("#xm").val("");
+            $("#nl").val("");
+            $(".nan").prop("checked",true);
+            $("#bj").val("");
+          }
+        },error:function (msg) {
+          console.log(msg)
+        }
+      })
+    }
+
+    var time=new Date();
+    var timer=time.toLocaleString();
+    //添加数据
+    $(".add").click(function () {
+      //获取数据内容
+      var a=$("#xh").val();
+      var b=$("#xm").val();
+      var c=$("#nl").val();
+      var d=$("input:checked").val();
+      var e=$("#bj").val();
+      $.ajax({
+        url:"/add",
+        data:{
+          id:a,
+          name:b,
+          age:c,
+          sex:d,
+          class:e,
+          date:timer
+        },
+        success:function (ret) {
+          console.log(ret)
+          if(ret.code==0){
+           add()
+          }
+        },error:function (msg) {
+          console.log(msg)
+        }
+      })
+    })
+
+   //全部删除数据
+    $(".delAll").click(function () {
+      $.ajax({
+        url:"/dalAll",
+        success:function (ret) {
+          console.log(ret)
+          if(ret.code==0){
+            add()
+          }
+        },error:function (msg) {
+          console.log(msg)
+        }
+      })
+    });
+
+    //单行删除 事件委托 局部渲染
+    $("tbody").on("click",".del",function () {
+      var a=$(this).attr("v");
+      $.ajax({
+        url:"/del",
+        data:{
+          _id:a
+        },
+        success:function (ret) {
+          console.log(ret)
+          if(ret.code==0){
+            add();
+          }
+        },error:function (msg) {
+          console.log(msg)
+        }
+      })
+    });
+
+    //修改数据， 局部渲染， 事件委托
+    $("tbody").on("click",".edit",function () {
+      var aa=$(this).siblings().attr("v");
+      $(".bc").attr("_id",aa);
+    })
+
+    $(".bc").click(function () {
+      var aa=$(this).attr("_id");
+      var xh=$(".xh").val();
+      var xm=$(".xm").val();
+      var nl=$(".nl").val();
+      var xb=$(".ccc input:checked").val();
+      var bj=$(".bj").val();
+      // alert(xh);alert(xm);alert(nl);alert(xb);alert(bj);
+      $.ajax({
+        url:"/edit",
+        data: {
+          f: {
+            _id: aa
+          },
+          q: {
+            id: xh,
+            name: xm,
+            age: nl,
+            sex: xb,
+            class: bj
+          }
+        },
+          success:function (ret) {
+            console.log(ret)
+            if(ret.code==0){
+              add()
+              $(".xh").val("");
+              $(".xm").val("");
+              $(".nl").val("");
+              $(".man").prop("checked",true);
+              $(".bj").val("");
+            }
+
+
+
+          },error:function (msg) {
+            console.log(msg)
+          }
+
+      })
+    })
+
+    //查找数据
+    $("#cz").keydown(function (e) {
+
+      if(e.keyCode==13){
+       var aa=$(this).val();
+       $.ajax({
+         url:"/hc",
+         data:{
+           name:aa
+         },
+         success:function (ret) {
+           console.log(ret)
+           if(ret.code==0){
+             $("tbody").html("");
+             var da=ret.data;
+             var str="";
+             for(var i in da){
+               str+=`   <tr>
+                      <td>${da[i].id}</td>
+                      <td>${da[i].name}</td>
+                      <td>${da[i].age}</td>
+                      <td>${da[i].sex}</td>
+                      <td>${da[i].class}</td>
+                      <td>${da[i].date}</td>
+                      <td>
+                        <button v="${da[i]._id}" type="button" class="del btn btn-warning">删除</button>
+
+                        <button type="button" class="edit btn btn-danger" data-toggle="modal" data-target="#myModal">编辑</button>
+                      </td>
+                    </tr>`
+             }
+             $("tbody").html(str);
+           }
+         },error:function (msg) {
+           console.log(msg)
+         }
+       })
+      }
+    })
+
+    //查找数据 事件绑定  Input事件  模糊查询
+    $("#cz").on("input",function () {
+      var aa=$(this).val();
+    if(aa==""){
+      add();
+    }else{
+      $.ajax({
+        url:"/mh",
+        data:{
+          name:aa
+        },
+        success:function (ret) {
+          console.log(ret)
+          if(ret.code==0){
+            $("tbody").html("");
+            var da=ret.data;
+            var str="";
+            for(var i in da){
+              str+=`   <tr>
+                      <td>${da[i].id}</td>
+                      <td>${da[i].name}</td>
+                      <td>${da[i].age}</td>
+                      <td>${da[i].sex}</td>
+                      <td>${da[i].class}</td>
+                      <td>${da[i].date}</td>
+                      <td>
+                        <button v="${da[i]._id}" type="button" class="del btn btn-warning">删除</button>
+
+                        <button type="button" class="edit btn btn-danger" data-toggle="modal" data-target="#myModal">编辑</button>
+                      </td>
+                    </tr>`
+            }
+            $("tbody").html(str);
+          }
+        },error:function (msg) {
+          console.log(msg)
+        }
+      })
+    }
+    })
+
+    //分页
+    $(".pp>span").on("click",function () {
+      // alert($(".pp>span").length)
+      var aa=$(this).index();
+      // alert(aa)
+      $.ajax({
+        url:"/pag",
+        data:{
+          index:aa
+        },
+        success:function (ret) {
+          console.log(ret)
+          if(ret.code==0){
+            var da=ret.data;
+            var str="";
+            for(var i in da){
+              str+=`   <tr>
+                      <td>${da[i].id}</td>
+                      <td>${da[i].name}</td>
+                      <td>${da[i].age}</td>
+                      <td>${da[i].sex}</td>
+                      <td>${da[i].class}</td>
+                      <td>${da[i].date}</td>
+                      <td>
+                        <button v="${da[i]._id}" type="button" class="del btn btn-warning">删除</button>
+
+                        <button type="button" class="edit btn btn-danger" data-toggle="modal" data-target="#myModal">编辑</button>
+                      </td>
+                    </tr>`
+            }
+            $("tbody").html(str);
+          }
+        },error:function (msg) {
+          console.log(msg)
+        }
+      })
+    })
+
+    //上一页，下一页效果
+    $(".pp>span").eq(0).css({background:"red"}).siblings().css({background:""})
+    var index=0;
+   $(".pa").click(function () {
+
+      var a=$(".pp>span").length;
+      index--;
+
+      if(index<0){
+        index=a-1;
+
+      }
+      console.log(index)
+      var color=$(".pp>span:nth-child(1)").css("background")
+      console.log(color);
+      // $(".pp>span").eq(index).addClass(".pc").siblings().removeClass(".pc")
+      $(".pp>span").eq(index).css({background:"red"}).siblings().css({background:""})
+    })
+
+    $(".pb").click(function () {
+
+      var a=$(".pp>span").length;
+      index++;
+
+      if(index>a-1){
+        index=0;
+
+      }
+      console.log(index)
+      var color=$(".pp>span:nth-child(1)").css("background")
+      console.log(color);
+      // $(".pp>span").eq(index).addClass(".pc").siblings().removeClass(".pc")
+      $(".pp>span").eq(index).css({background:"red"}).siblings().css({background:""})
+    })
+  })
+
+
+
+
+</script>

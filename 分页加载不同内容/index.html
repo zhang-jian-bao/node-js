@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{margin: 0; padding: 0;}
+        body{background: #ddd;}
+        .wrap{width: 800px; background: #fff; box-shadow:2px 2px 2px #fff,2px 2px 2px #fff;   margin: 20px auto;}
+        .wrap h3{padding-left: 20px;}
+        .wrap ul{list-style: none; padding: 20px;}
+        .wrap ul li{line-height: 30px; height: 30px;}
+        .page{border-top: 1px solid #ccc; padding: 20px 0; text-align: center;}
+        .page span{display: inline-block; width: 20px; height: 20px; font-size: 12px; color: #333; cursor: pointer; border: 1px solid #ccc; text-align: center; line-height: 20px;}
+        .page span.active{border:none;}
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="box"></div>
+<!--        <div class="list">-->
+<!--            <h3>1. 驾驶机动车在这种道路上如何通行？</h3>-->
+<!--            <ul>-->
+<!--                <li>-->
+<!--                    <input name="sex" type="radio">-->
+<!--                    <label for="">在道路两边通行</label>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <input name="sex" type="radio">-->
+<!--                    <label for="">在道路两边通行</label>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <input name="sex" type="radio">-->
+<!--                    <label for="">在道路两边通行</label>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <input name="sex" type="radio">-->
+<!--                    <label for="">在道路两边通行</label>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--        <div class="list">-->
+<!--            <h3>1. 驾驶机动车在这种道路上如何通行？</h3>-->
+<!--            <ul>-->
+<!--                <li>-->
+<!--                    <input name="sex" type="radio">-->
+<!--                    <label for="">在道路两边通行</label>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <input name="sex" type="radio">-->
+<!--                    <label for="">在道路两边通行</label>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <input name="sex" type="radio">-->
+<!--                    <label for="">在道路两边通行</label>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <input name="sex" type="radio">-->
+<!--                    <label for="">在道路两边通行</label>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--        <div class="list">-->
+<!--            <h3>1. 驾驶机动车在这种道路上如何通行？</h3>-->
+<!--            <ul>-->
+<!--                <li>-->
+<!--                    <input name="sex" type="radio">-->
+<!--                    <label for="">在道路两边通行</label>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <input name="sex" type="radio">-->
+<!--                    <label for="">在道路两边通行</label>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <input name="sex" type="radio">-->
+<!--                    <label for="">在道路两边通行</label>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <input name="sex" type="radio">-->
+<!--                    <label for="">在道路两边通行</label>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--        <div class="list">-->
+<!--            <h3>1. 驾驶机动车在这种道路上如何通行？</h3>-->
+<!--            <ul>-->
+<!--                <li>-->
+<!--                    <input name="sex" type="radio">-->
+<!--                    <label for="">在道路两边通行</label>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <input name="sex" type="radio">-->
+<!--                    <label for="">在道路两边通行</label>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <input name="sex" type="radio">-->
+<!--                    <label for="">在道路两边通行</label>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <input name="sex" type="radio">-->
+<!--                    <label for="">在道路两边通行</label>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--        <div class="list">-->
+<!--            <h3>1. 驾驶机动车在这种道路上如何通行？</h3>-->
+<!--            <ul>-->
+<!--                <li>-->
+<!--                    <input name="sex" type="radio">-->
+<!--                    <label for="">在道路两边通行</label>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <input name="sex" type="radio">-->
+<!--                    <label for="">在道路两边通行</label>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <input name="sex" type="radio">-->
+<!--                    <label for="">在道路两边通行</label>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <input name="sex" type="radio">-->
+<!--                    <label for="">在道路两边通行</label>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </div>-->
+
+        <div class="page">
+            <span class="active">1</span>
+            <span>2</span>
+            <span>3</span>
+            <span>4</span>
+            <span>5</span>
+        </div>
+    </div>
+</body>
+</html>
+<script src="js/jquery-1.11.2.min.js"></script>
+<script>
+
+    //等待页面所有dom元素加载完毕之后在执行
+    $(function () {
+
+        $.ajax({
+            url : "https://api.apishop.net/common/driverLicense/queryQuestionListByKeyword",
+            data : {
+                apiKey : "PxPlhAH1fedfa9cb4057fbfb2bc891f76796c58f6ccb4e1",
+                page : 1,   //第几页的数据
+                pageSize : 10,  //条数
+                licenseType : 0,    //小车
+                subjectType : 0,    //科目一
+                keyword : ""
+            },
+            success : function (response) {
+
+                var data = JSON.parse(response).result.driverQuestionList;
+
+                for(var i=0;i<data.length;i++){
+                   var odiv =  document.createElement("div");
+                   odiv.className = "list";
+                   odiv.innerHTML = "  <h3>" + (i+1) +"." + data[i].question +"</h3>\n" +
+                       "            <ul>\n" +
+                       "                <li>\n" +
+                       "                    <input name=\"sex\" type=\"radio\">\n" +
+                       "                    <label for=\"\">"+ data[i].optionA +"</label>\n" +
+                       "                </li>\n" +
+                       "                <li>\n" +
+                       "                    <input name=\"sex\" type=\"radio\">\n" +
+                       "                    <label for=\"\">"+  data[i].optionB +"</label>\n" +
+                       "                </li>\n" +
+                       "                <li>\n" +
+                       "                    <input name=\"sex\" type=\"radio\">\n" +
+                       "                    <label for=\"\">"+  data[i].optionC +"</label>\n" +
+                       "                </li>\n" +
+                       "                <li>\n" +
+                       "                    <input name=\"sex\" type=\"radio\">\n" +
+                       "                    <label for=\"\">"+  data[i].optionD +"</label>\n" +
+                       "                </li>\n" +
+                       "            </ul>";
+                        $(".box").append(odiv)
+                }
+            },
+            error : function (error) {
+                console.log(error);
+            }
+        })
+
+
+
+        $(".page span").click(function () {
+            $(this).addClass("active").siblings().removeClass("active");
+            alert("11")
+            $.ajax({
+                url : "https://api.apishop.net/common/driverLicense/queryQuestionListByKeyword",
+                data : {
+                    apiKey : "PxPlhAH1fedfa9cb4057fbfb2bc891f76796c58f6ccb4e1",
+                    page : $(this).index() + 1 ,   //第几页的数据
+                    pageSize : 10,  //条数
+                    licenseType : 0,    //小车
+                    subjectType : 0,    //科目一
+                    keyword : ""
+                },
+                success : function (response) {
+                    console.log(JSON.parse(response))
+                    $(".box").html("");
+
+                    var data = JSON.parse(response).result.driverQuestionList;
+
+                    for(var i=0;i<data.length;i++){
+                        var odiv =  document.createElement("div");
+                        odiv.className = "list";
+                        odiv.innerHTML = "  <h3>" + (i+1) +"." + data[i].question +"</h3>\n" +
+                            "            <ul>\n" +
+                            "                <li>\n" +
+                            "                    <input name=\"sex\" type=\"radio\">\n" +
+                            "                    <label for=\"\">"+ data[i].optionA +"</label>\n" +
+                            "                </li>\n" +
+                            "                <li>\n" +
+                            "                    <input name=\"sex\" type=\"radio\">\n" +
+                            "                    <label for=\"\">"+  data[i].optionB +"</label>\n" +
+                            "                </li>\n" +
+                            "                <li>\n" +
+                            "                    <input name=\"sex\" type=\"radio\">\n" +
+                            "                    <label for=\"\">"+  data[i].optionC +"</label>\n" +
+                            "                </li>\n" +
+                            "                <li>\n" +
+                            "                    <input name=\"sex\" type=\"radio\">\n" +
+                            "                    <label for=\"\">"+  data[i].optionD +"</label>\n" +
+                            "                </li>\n" +
+                            "            </ul>";
+                        $(".box").append(odiv)
+                    }
+                },
+                error : function (error) {
+                    console.log(error)
+                }
+            })
+        })
+
+    })
+
+
+</script>

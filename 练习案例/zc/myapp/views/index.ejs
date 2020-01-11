@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>登录。注册练习</title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+<div class="box">
+  <ul>
+    <li class="one">登录</li>
+    <li>注册</li>
+  </ul>
+  <ol>
+    <li class="two">
+      <input type="text" placeholder="请输入用户名" id="a"><br>
+      <input type="text" placeholder="请输入密码" id="b"><br>
+      <button id="bt">登录</button>
+    </li>
+    <li>
+      <input type="text" placeholder="请输入用户名" id="c"><br>
+      <input type="text" placeholder="请输入密码" id="d"><br>
+      <input type="text" placeholder="再次输入密码" id="e"><br>
+      <button id="btt">注册</button>
+    </li>
+  </ol>
+</div>
+</body>
+</html>
+<script src="js/jquery-3.4.1.js"></script>
+<script>
+  $(".box>ul>li").click(function () {
+    $(this).addClass("one").siblings().removeClass("one");
+    var i=$(this).index();
+    $(".box>ol>li").eq(i).show().siblings().hide();
+  })
+  $("#btt").click(function () {
+//    alert(111);
+    var c=$("#c").val();
+    var d=$("#d").val();
+    var e=$("#e").val();
+    if(c==""){
+      alert("用户名不能为空！");
+    }else if(d==""){
+      alert("密码不能为空！");
+    }else if(d!=e){
+      alert("密码输入错误！");
+    }else{
+      $.ajax({
+//        type:"POST",
+        type:"GET",
+        url:"/zc",
+        data:{
+          yh:c,
+          pa:d,
+          pass:e
+        },
+        success: function (ret) {
+          console.log(ret);
+        },error: function (error) {
+          console.log(error);
+        }
+      })
+    }
+  })
+</script>

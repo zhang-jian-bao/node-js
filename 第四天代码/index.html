@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.0/css/swiper.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.0/js/swiper.min.js"></script>
+    <style>
+        html, body {
+            position: relative;
+        }
+        body {
+            background: #eee;
+            font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            color:#000;
+            margin: 0;
+            padding: 0;
+        }
+        .swiper-container {
+            width: 100%;
+            height: 140px;
+        }
+        .swiper-slide {
+            text-align: center;
+            font-size: 18px;
+            background: #fff;
+
+            /* Center slide text vertically */
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            -webkit-justify-content: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+        }
+        img{
+            max-width: 100%;
+            max-height: 100%;
+            display: block;
+        }
+
+        *{margin: 0; padding: 0;}
+        .header{min-width: 320px; color: #fff; font-size: 14px; max-width: 640px; margin: 0 auto; background: mediumpurple; text-align: center; height: 30px; line-height: 30px;}
+        .footer{width: 100%; z-index: 9999; padding-top: 10px; background: #ddd; color: #333; position: fixed; bottom: 0; left: 0;}
+        .footer ul{display: flex; list-style: none;}
+        .footer ul li{width: 25%; text-align: center; height: 35px; line-height: 35px;}
+        .footer ul li a{text-decoration: none; color: #333;}
+    </style>
+</head>
+<body>
+
+    <div class="header">首页</div>
+
+    <!-- Swiper -->
+    <div class="swiper-container">
+        <div id="banner" class="swiper-wrapper">
+<!--            <div class="swiper-slide">-->
+<!--                <img src="https://img20.360buyimg.com/babel/s1920x740_jfs/t1/52978/3/11430/62079/5d8345a0Eb03acfec/387156d6c06f63cb.jpg!cc_1920x740" alt="">-->
+<!--            </div>-->
+<!--            <div class="swiper-slide">-->
+<!--                <img src="https://img12.360buyimg.com/babel/s1920x740_jfs/t1/77805/39/9943/138458/5d79ebdaE1b64510b/d65e6a21ac3d4c13.jpg!cc_1920x740" alt="">-->
+<!--            </div>-->
+<!--            <div class="swiper-slide">-->
+<!--                <img src="https://img13.360buyimg.com/babel/s1920x740_jfs/t1/53780/2/11369/109786/5d834aa4E7ccacd46/8c562ae78ff6d475.jpg!cc_1920x740" alt="">-->
+<!--            </div>-->
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination"></div>
+    </div>
+
+
+    <div class="footer">
+        <ul>
+            <li><a href="#">首页</a></li>
+            <li><a href="#">留言</a></li>
+            <li><a href="#">列表</a></li>
+            <li><a href="login.html">我的</a></li>
+        </ul>
+    </div>
+</body>
+</html>
+<script src="js/jquery-1.11.2.min.js"></script>
+<script>
+    var swiper = new Swiper('.swiper-container', {
+        pagination: {
+            el: '.swiper-pagination',
+        },
+    });
+
+    var banner = document.getElementById("banner");
+
+    //发送请求
+    $.ajax({
+        url : "http://localhost:3000/api/banner",
+        success : function (response) {
+            //保存请求到的数据
+            var data = JSON.parse(response);
+
+            //遍历数据
+            for(var i=0;i<data.slider.length;i++){
+                //创建元素
+                var odiv = document.createElement("div");
+                //给元素添加类名
+                odiv.className = "swiper-slide";
+                //给元素设置内容
+                odiv.innerHTML = `<img src="${data.slider[i]}">`;
+                //把创建的元素放到banner里面
+                banner.append(odiv);
+            }
+
+        },
+        error : function (error) {
+            console.log(error)
+        }
+    })
+</script>

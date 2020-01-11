@@ -1,0 +1,68 @@
+@charset "utf-8";
+body,div,span,p,ul,li,ol{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+html{
+    height: 100%;
+}
+body{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    font-size: 0.16rem;
+    line-height: 0.3rem;
+}
+$w:4.8rem;
+.zjb-heard{
+    height: 0.4rem;
+    background: greenyellow;
+}
+.zjb-box{
+    height: 100%;
+    flex-grow: 1;
+    overflow: hidden;
+    background: #eee;
+    .zjb-con{
+        min-height: 101%;
+        background: #fff;
+    }
+}
+//底部布局
+.zjb-foot{
+    height:0.4rem;
+    ul{
+        display: flex;
+        justify-content:space-around;
+        li{
+            text-align: center;
+            width:25%;
+            font-size:0.2rem;
+            font-weight:bolder;
+            &.active{
+                background: orange;
+            }
+        }
+    }
+}
+//整体
+.qh{
+    width:$w;
+    flex-grow:1;
+}
+//底部首页中的轮播图布局
+.banner{
+    height:2.4rem;
+    img{
+        width:$w;
+        height:2.4rem;
+    }
+}
+//列表布局
+.aa{
+    width:2rem;
+    height:2rem;
+    background: orange;
+    border: 1px solid #000;
+}

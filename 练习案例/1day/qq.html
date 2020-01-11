@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="email" class="ss"><span></span>
+</body>
+</html>
+<script src="js/jquery-3.4.1.js"></script>
+<script>
+     $(".ss").blur(function (e) {
+         // alert(e.keyCode)
+
+             // alert(11)
+             var a=$(this).val();
+             alert(a)
+
+
+           var str=/^\w{1,}@[A-Za-z0-9]{2,3}\.[A-Za-z0-9]{2,3}$/
+             var s=str.test(a)
+             if(s){
+                 alert(111)
+                 $("span").html("正确")
+             }else{
+                 $("span").html("错误")
+             }
+
+     })
+</script>

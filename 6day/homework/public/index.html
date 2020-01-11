@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{margin: 0; padding: 0;}
+        .wrap{width: 250px; margin: 100px auto; border: 1px solid #eee; box-shadow: 2px 2px 2px #eee;}
+        .wrap ul{list-style: none; border-bottom:1px solid #ccc; overflow: hidden;}
+        .wrap ul li{float: left; width: 125px; cursor: pointer; height: 33px; line-height: 33px; text-align: center;}
+        .wrap ul li.active{border-bottom:2px solid #f60;}
+        .wrap .container .register{display: none;}
+        .wrap .container{padding: 20px 10px;}
+        .wrap .container .login p,.wrap .container .register p{margin-top:15px; }
+        .wrap .container .login input , .wrap .container .register input{width: 100%; font-size: 14px; text-indent: 2em; border: 1px solid #ccc; border-radius: 3px; height: 38px;}
+        .wrap .container .login button , .wrap .container .register button{width: 100%; margin-top: 10px; height: 38px; background: mediumpurple; color: #fff; font-size: 14px; border-radius: 3px; }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <ul class="title">
+            <li class="active">登录</li>
+            <li>注册</li>
+        </ul>
+        <div class="container">
+            <div class="login box" >
+                <p>
+                    <input class="name" type="text" placeholder="请输入用户名">
+                </p>
+                <p>
+                    <input class="pass" type="password" placeholder="请输入密码">
+                </p>
+                <p>
+                    <button>登录</button>
+                </p>
+            </div>
+
+            <div class="register box">
+                <p>
+                    <input type="text" class="reg_user" placeholder="请输入用户名">
+                </p>
+                <p>
+                    <input type="text" class="reg_pass" placeholder="请输入密码">
+                </p>
+                <p>
+                    <input type="text" class="reg_real_pass" placeholder="请再次输入密码">
+                </p>
+                <p>
+                    <button>注 册</button>
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script src="js/jquery-1.11.2.min.js"></script>
+<script>
+    //等待页面所有dom元素加载完毕之后在执行
+    $(function () {
+        //获取到li元素并添加点击事件
+        $("li").click(function () {
+            //获取下标
+            var _index = $(this).index();
+            //添加和移除类名
+            $(this).addClass("active").siblings().removeClass("active");
+            //通过下标控制元素的显示与隐藏
+            $(".box").eq(_index).show().siblings().hide();
+        })
+
+
+        //注册功能
+        //点击按钮，获取到输入的用户名和密码，发送给后台进行注册
+        $(".register button").click(function () {
+            alert("111")
+            //获取注册输入的用户名
+            var regUser = $(".reg_user").val();
+            //获取注册输入的密码
+            var regPass = $(".reg_pass").val();
+            //获取注册再次输入的密码
+            var regRealPass = $(".reg_real_pass").val();
+            //将获取到的用户名以及密码发送给后台
+            $.ajax({
+                url : "http://localhost:8888/api/register",
+                type : "POST",
+                data : {
+                    rUser : regUser,
+                    rPass : regPass,
+                    realPass : regRealPass
+                },
+                success : function (response) {
+                    if(response.code == 0){
+                        $(".register").hide();
+                        $(".login").show();
+                        $(".title li").eq(0).addClass("active").siblings().removeClass("active");
+
+                    }
+                },
+                error : function (error) {
+                    console.log(error);
+                }
+            })
+        });
+
+
+        //登录功能
+        //点击登录按钮，获取登陆输入的用户名和密码，通过ajax发送给后台
+        $(".login button").click(function () {
+            //获取到输入的用户名
+            var name = $(".name").val();
+            //获取到输入的密码
+            var pass = $(".pass").val();
+            //通过ajax发送给后台
+            $.ajax({
+                url : "http://localhost:8888/api/login",
+                data : {
+                    name : name,
+                    pass : pass
+                },
+                type : "POST",
+                success : function (response) {
+                    if(response.code == 0){
+                        alert("登录成功")
+                    }else{
+                        alert("用户名或密码错误")
+                    }
+                },
+                error : function (error) {
+                    console.log(error)
+                }
+            })
+        })
+
+
+    })
+
+</script>

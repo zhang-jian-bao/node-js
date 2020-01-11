@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div class="wrap">
+        <div class="wrap-title">
+            <label for="">用户名:</label>
+            <input id="user" type="text" placeholder="请输入内容">
+        </div>
+        <div class="wrap-container">
+            <label for="">留言:</label>
+            <textarea id="content" name=""  ></textarea>
+        </div>
+        <div class="btn">
+            <input type="button" value="留言">
+        </div>
+    </div>
+</body>
+</html>
+<script src="js/jquery-1.11.2.min.js"></script>
+<script>
+
+
+    //写入数据
+    $(".btn input").click(function () {
+        //获取输入的用户名
+        var user = $("#user").val();
+        //获取留言的内容
+        var content = $("#content").val();
+
+        //发送ajax请求，将输入的用户名和留言的内容发送给后台
+        $.ajax({
+            url : "http://localhost:3000/api/write",
+            data : {
+                user : user,
+                content : content
+            },
+            success : function (response) {
+                console.log(response)
+            },
+            error : function (error) {
+                console.log(error)
+            }
+        })
+
+    })
+
+</script>

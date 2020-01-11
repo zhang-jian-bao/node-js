@@ -1,0 +1,52 @@
+body, h3, h4, h5, ul, li, ol, p, img {
+  margin: 0;
+  padding: 0;
+  list-style: none; }
+
+html {
+  height: 100%; }
+
+body {
+  height: 100%;
+  font-size: 0.16rem;
+  line-height: 0.3rem;
+  display: flex;
+  flex-direction: column; }
+
+.head {
+  width: 4.8rem;
+  height: 2.49rem; }
+
+.box {
+  height: 0;
+  flex-grow: 1;
+  overflow: hidden; }
+  .box .con {
+    min-height: 101%; }
+    .box .con > img {
+      width: 4.8rem;
+      height: 0.98rem; }
+    .box .con .top {
+      height: 1.7rem; }
+      .box .con .top ul {
+        padding: 0.2rem 0;
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap; }
+        .box .con .top ul li {
+          text-align: center;
+          width: 25%;
+          height: 0.8rem; }
+          .box .con .top ul li img {
+            width: 0.34rem;
+            height: 0.26rem;
+            display: block;
+            margin: 0 auto; }
+          .box .con .top ul li a {
+            text-decoration: none;
+            font-size: 0.16rem;
+            color: #000;
+            font-weight: bolder;
+            line-height: 0.5rem; }
+
+/*# sourceMappingURL=index.css.map */

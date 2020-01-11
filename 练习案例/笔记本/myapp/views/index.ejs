@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>笔记本</title>
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <style>
+    *{
+      list-style: none;
+    }
+    .box{
+      margin: 100px auto;
+      height: auto;
+      background: #bce8f1;
+    }
+    .one,.two{
+      /*border: 1px solid #000;*/
+      width: 600px;
+      height:auto;
+      margin: 0 auto;
+    }
+    .one>p,.two>p{
+      width: 100%;
+      height: 40px;
+      background: red;
+      text-align: center;
+      line-height: 40px;
+      font-size: 20px;
+      font-weight: bolder;
+    }
+    .one>ul,.two>ul{
+      width: 100%;
+      height: auto;
+      overflow: hidden;
+      display: none;
+    }
+
+    .one>ul>li,.two>ul>li{
+      text-align: left;
+border-bottom: dashed 2px red;
+    }
+    .one span,.two span{
+      margin-left: 20px;
+    }
+    .two button{
+      float: right;
+      margin-right: 20px;
+    }
+  </style>
+</head>
+<body>
+          <div class="container box text-center">
+
+            <h1>笔记本 </h1>
+            <hr>
+            <form class="form-inline">
+              <div class="form-group">
+                <label class="sr-only" for="name">事件</label>
+                <div class="input-group">
+                  <div class="input-group-addon">ID:</div>
+                  <input type="text" class="form-control" id="name" placeholder="添加的事项">
+                  <div class="input-group-addon">$</div>
+                </div>
+              </div>
+              <button type="button" class="add btn btn-primary">添加</button>
+            </form>
+            <hr>
+            <div class="one">
+            <p>代办事项 <span>0</span></p>
+            <ul>
+
+
+            </ul>
+            </div>
+            <div class="two">
+              <p>完成事项 <span>0</span></p>
+              <ul>
+                <li>
+                  <input type="checkbox">
+                  <span>222</span>
+                  <button type="button" class="btn btn-danger">删除数据</button>
+                </li>
+              </ul>
+            </div>
+          </div>
+</body>
+</html>
+<script src="js/jquery-3.4.1.js"></script>
+<script src="js/bootstrap.js"></script>
+<script>
+  //单击，待办事项显示
+  $(".one>p").click(function () {
+    $(".one>ul").show();
+  });
+  //双击，代办事项隐藏
+  $(".one>p").dblclick(function () {
+    $(".one>ul").hide();
+  });
+  //单击，完成事项显示
+  $(".two>p").click(function () {
+    $(".two>ul").show();
+  });
+  //双击，完成事项隐藏
+  $(".two>p").dblclick(function () {
+    $(".two>ul").hide();
+  });
+
+  // //span的个数
+  // function f() {
+  //   $(".one>p>span").html($(".one>ul>li").length);
+  //   $(".two>p>span").html($(".two>ul>li").length);
+  // }
+  // f()
+
+
+  //分装函数
+  function add(){
+    $(".one>ul").html("");
+    $.ajax({
+      url:"/read",
+      success:function (ret) {
+        console.log(ret)
+        if(ret.code==0){
+          var data=ret.data;
+          var str="";
+          for(var i=0;i<data.length;i++){
+            str+=` <li>
+                  <input class="cc" type="checkbox">
+                  <span>${data[i].name}</span>
+                  <button class="del" v="${data[i]._id}">删除</button>
+                </li>`
+
+          }
+
+          $(".one>ul").html(str);
+            $("#name").val("");
+        }
+
+      },error:function (msg) {
+        console.log(msg)
+      }
+    })
+  }
+  add();
+
+  //添加
+     $(".add").click(function () {
+
+       var a=$("#name").val();
+       if(a==""){
+         alert("内容不能为空")
+       }else{
+         $.ajax({
+           url:"/add",
+           data:{
+             name:a,
+             checked:false
+           },
+           success:function (ret) {
+             console.log(ret)
+            add()
+
+           },error:function (msg) {
+             console.log(msg)
+           }
+         })
+
+         }
+     });
+
+     //删除 有点问题
+  $(".one>ul").on("click",".del",function () {
+     var a=$(this).attr("v");
+     $.ajax({
+         url:"/dela",
+         data:{
+             _id:a
+         },
+         success:function (ret) {
+             console.log(ret)
+         },error:function (msg) {
+             console.log(msg)
+         }
+     })
+  })
+
+  //点击多选框，隐藏
+  $(".one>ul").on("click","input:checked",function () {
+//     alert(111)
+//     var a=$(this).index();
+//     // alert(a)
+//     $(this).parents("li").remove();
+//     var b=$(this).next("span").html();
+//     // alert(b)
+// // add()
+      alert($(this).prop("checked"))
+  })
+</script>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录注册练习</title>
+    <style>
+        .box{
+            width:400px;
+            height: 400px;
+            margin:100px auto;
+            border: 1px solid #000;
+            position: relative;
+        }
+        .dl,.zc{
+            border: 1px solid #000;
+            width:400px;
+            height:400px;
+            text-align: center;
+        }
+        .zc{
+            position: absolute;
+            top:0;
+            left:0;
+            display: none;
+        }
+        #b,#d{
+            margin:30px 0;
+        }
+    </style>
+</head>
+<body>
+         <div class="box">
+             <div class="dl">
+             <h3>登录</h3>
+             <label for="a">用户名：</label>
+             <input type="text" placeholder="请输入" id="a"><br>
+             <label for="b">密码：</label>
+             <input type="text" id="b"><br>
+             <button>登录</button>
+             <a href="#" id="aa">立即注册</a>
+             </div>
+             <div class="zc">
+                 <h3>注册</h3>
+                 <label for="c">用户名：</label>
+                 <input type="text" placeholder="请输入" id="c"><br>
+                 <label for="d">密码：</label>
+                 <input type="text" id="d"><br>
+                 <button>注册</button>
+                 <a href="#" id="dd">返回登录</a>
+             </div>
+         </div>
+</body>
+</html>
+<script src="../app/js/jquery-3.4.1.js"></script>
+<script>
+    //点击立即注册切换到注册页面
+    $("#aa").click(function () {
+//        $(".dl").css({display:"none"});
+        $(".dl").hide();
+        $(".zc").show();
+    });
+    //点击返回切换到登录页面
+    $("#dd").click(function () {
+//        $(".dl").css({display:"none"});
+        $(".zc").hide();
+        $(".dl").show();
+    })
+    //注册ajax请求跨域
+    $(".zc button").click(function () {
+        var cc=$("#c").val();
+        var dd=$("#d").val();
+        $.ajax({
+            type:"POST",
+            url:"http://localhost:3000/write",
+            data:{
+               yh:cc,
+                ma:dd
+            },
+            success: function (ret) {
+                console.log(ret);
+            },error: function (msg) {
+                console.log(msg+"错误");
+            }
+        })
+    });
+    //登录ajax前台获取后台数据库
+    $(".dl button").click(function () {
+        var a=$("#a").val();
+        var b=$("#b").val();
+        $.ajax({
+            type:"POST",
+            url:"http://localhost:3000/read",
+            data:{
+                yh:a,
+                ma:b
+            },
+            success: function (ret) {
+                console.log(ret);
+                if(ret=="登录成功"){
+                    alert("登录成功");
+                    location.href="../app/gn.html";
+                }else if(ret=="登录失败"){
+                    alert("用户名或密码不对")
+                }
+            },error: function (msg) {
+                console.log(msg+"错误");
+            }
+        })
+    })
+</script>

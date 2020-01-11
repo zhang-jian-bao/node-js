@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>后台</title>
+    <style>
+        *{  margin:0;padding:0;list-style:none;}
+        .box{ width:100%;border:solid 1px #000; }
+        header,nav{width:100%;height:30px;background:greenyellow;  text-align: center; line-height:30px;}
+        nav{background:pink;}
+        nav>ul{overflow:hidden;}
+        nav>ul>li{float:left;width:40%;position:relative;}
+        nav>ul>li.one{color:red;}
+        nav>ul>li ol{display:none;}
+        nav ol{width:40px;position:absolute;top:30px;left:288px;z-index:1;}
+        nav ol>li:hover{background:magenta;}
+        .cc>ul>li>input{width:100%;height:30px;margin-top:20px;}
+        .cc>ul>li>button{width:100px;height:30px;border:none;background:blue;color:#fff;margin-top:20px;}
+    </style>
+</head>
+<body>
+         <div class="box">
+             <header>后台管理系统</header>
+             <nav>
+                 <ul>
+                     <li class="one">
+                         <p>轮播图</p>
+                         <ol>
+                             <li>打开</li>
+                             <li>弹框</li>
+                         </ol>
+                     </li>
+                     <li>
+                         <p>列表</p>
+                         <ol>
+                             <li>打开</li>
+                             <li>弹框</li>
+                         </ol>
+                     </li>
+                 </ul>
+             </nav>
+             <h2>嗨！欢迎来到后台管理系统</h2>
+             <div class="cc">
+                 <ul>
+                     <li>
+                         <input type="text" placeholder="请添加图片地址" id="a"><br>
+                         <input type="text" placeholder="请输入内容" id="e"><br>
+                         <button id="b">添加</button>
+                     </li>
+                     <li>
+                         <input type="text" placeholder="请添加列表内容" id="c"><br>
+                         <button id="d">添加</button>
+                     </li>
+                 </ul>
+             </div>
+         </div>
+</body>
+</html>
+<script src="js/jquery-3.4.1.js"></script>
+<script>
+//    $("nav>ul>li").click(function () {
+//        $(this).addClass("one").siblings().removeClass("one");
+//        $("nav>ul>li>ol").show();
+//    })
+    $("#d").click(function () {
+        var c=$("#c").val();
+        var e=$("#e").val();
+        $.ajax({
+            url:"api/write",
+            data:{
+                name:c,
+                pass:e
+            },
+            success: function (ret) {
+                console.log(ret+"添加成功")
+            },error:function(error){
+                console.log(error+"添加失败")
+            }
+        })
+    });
+$("#b").click(function () {
+    var a=$("#a").val();
+    $.ajax({
+        url:"api/bannerwrite",
+        data:{
+            name:a
+        },
+        success: function (ret) {
+            console.log(ret+"添加成功")
+        },error:function(error){
+            console.log(error+"添加失败")
+        }
+    })
+})
+</script>

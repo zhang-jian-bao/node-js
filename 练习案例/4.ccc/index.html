@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link rel="stylesheet" href="css/swiper-3.4.2.min.css" />
+		<link rel="stylesheet" href="css/index.css" />
+		<script src='js/iscroll-probe.js'></script>
+		<script src='js/jquery-3.4.1.js'></script>
+		<script src='js/swiper-3.4.2.min.js'></script>
+		<script src='js/rem%20.js'></script>
+	</head>
+	<body>
+		<div class="swiper-container qh">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide">
+					<div class="zjb-heard">头部</div>
+					<div class="zjb-box">
+						<div class="zjb-con">
+							<!--滚动开始-->
+							<!--轮播图布局-->
+							<div class="swiper-container banner">
+								<div class="swiper-wrapper">
+									<!--<div class="swiper-slide"><img src="img/banner%20(3).png" alt=""></div>-->
+									<!--<div class="swiper-slide"><img src="img/banner%20(2).png" alt=""></div>-->
+									<!--<div class="swiper-slide"><img src="img/banner%20(1).png" alt=""></div>-->
+									<!--<div class="swiper-slide"><img src="img/banner%20(1).jpg" alt=""></div>-->
+								</div>
+								<div class="swiper-pagination"></div>
+							</div>
+							<!--列表布局-->
+							<div class="list">
+								<ul>
+									<!--<li>-->
+										<!--<img src="img/aa%20(1).jpg" alt="">-->
+										<!--<h4>移动电源</h4>-->
+										<!--<b>公牛插座，上好五金店</b>-->
+										<!--<p>399</p>-->
+									<!--</li>-->
+									<!--<li>-->
+										<!--<img src="img/aa%20(2).jpg" alt="">-->
+										<!--<h4>移动电源</h4>-->
+										<!--<b>公牛插座，上好五金店</b>-->
+										<!--<p>399</p>-->
+									<!--</li>-->
+								</ul>
+							</div>
+							<!--滚动结束-->
+						</div>
+					</div>
+				</div>
+				<div class="swiper-slide">
+					<div>
+						<label for="a">用户名：</label>
+						<input type="text" id="a"><br>
+						<label for="b">留言板：</label>
+						<textarea name="" id="b" cols="30" rows="10"></textarea><br>
+						<button>发送</button>
+					</div>
+				</div>
+				<div class="swiper-slide">
+					<!--读取加登录注册-->
+					<div class="dq">
+						<ul>
+
+						</ul>
+					</div>
+					<div id="da">
+						<label for="yy">用户名：</label>
+						<input type="text" id="yy"><br>
+						<label for="mm">密码：</label>
+						<input type="text" id="mm"><br>
+						<input type="button" value="登录" id='dd'>
+						<input type="button" value="立即注册" id="zc">
+						<!--<a href="#zz">立即注册</a>-->
+					</div>
+
+				</div>
+				<div class="swiper-slide">
+					<div id="zz">
+						<label for="ya">用户名：</label>
+						<input type="text" id="ya"><br>
+						<label for="ma">密码：</label>
+						<input type="text" id="ma"><br>
+						<input type="button" value="立即注册" id='ds'>
+						<input type="button" value="返回" id="za">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="zjb-foot">
+			<ul>
+				<li class="active">首页</li>
+				<li>留言</li>
+				<li>列表</li>
+				<li>我的</li>
+			</ul>
+		</div>
+	</body>
+</html>
+<script>
+	//主治浏览器自带的touchmove 事件
+	document.addEventListener('touchmove',function(event){
+		event.preventDefault();
+	},{passive:false});
+	//首页滚动布局
+	var zjbSc=new IScroll('.zjb-box',{});
+	//点击底部切换页面
+	var qh=new Swiper(".qh",{
+		onSlideChangeEnd: function (swiper) {
+			var k=swiper.activeIndex;
+			$(".zjb-foot>ul>li").eq(k).addClass("active").siblings().removeClass("active");
+		}
+	});
+	$(".zjb-foot>ul>li").click(function () {
+		$(this).addClass("active").siblings().removeClass("active");
+		var i=$(this).index();
+		qh.slideTo(i);
+	});
+
+	//首页ajax渲染
+	$(function () {
+		//ajax渲染轮播图
+		$.ajax({
+			type:"post",
+			url:"http://localhost:3000/api/banner",
+			async:true,
+			data:{},
+			success: function (ret) {
+				var data=JSON.parse(ret).banner;
+				console.log(data);
+				var str="";
+				for(var i  in data){
+					str+=`<div class="swiper-slide"><img src="${data[i]}" alt=""></div>`
+				}
+				$(".banner .swiper-wrapper").html(str);
+				//轮播图布局
+				var banner=new Swiper(".banner",{
+					autoplay:1500,
+					speed:500,
+					effect:"coverflow",
+					pagination:".swiper-pagination",
+					paginationClickable:true
+				});
+				//列表
+				var dat=JSON.parse(ret).list;
+				var str1='';
+				for(var k in dat){
+					str1+=`	<li>
+								<img src="${dat[k].img}" alt="">
+								<h4>${dat[k].a}</h4>
+								<b>${dat[k].b}</b>
+								<p>${dat[k].c}</p>
+							</li>`
+				}
+				$(".list>ul").html(str1);
+			},error: function (msg) {
+				console.log(msg);
+			}
+		})
+	});
+	//留言板写入数据
+	$("button").click(function () {
+		//获取用户名和留言板
+		var yh=$("#a").val();
+		var lyb=$("#b").val();
+		$.ajax({
+			type:"POST",
+			url:"http://localhost:3000/api/list",
+			async:true,
+			data:{
+				user:yh,
+				us:lyb
+			},
+			success: function (ret) {
+				console.log(ret);
+
+			},error: function (msg) {
+				console.log(msg);
+			}
+		});
+		//留言板写入
+		$.ajax({
+			type:"get",
+			url:"http://localhost:3000/api/write",
+			async:true,
+			data:{},
+			success: function (ret) {
+				console.log(ret);
+
+				var str2=$("<li>"+ret+"</li>");
+				$(".dq>ul").append(str2);
+			},error: function (msg) {
+				console.log(msg);
+			}
+		})
+	});
+     //登录页面
+	$("#dd").click(function () {
+		var yy=$("#yy").val().trim();
+		var mm=$("#mm").val().trim();
+
+			$.ajax({
+				type:"POST",
+				url:"http://localhost:3000/api/dd",
+				data:{
+					name:yy,
+					pass:mm
+				},
+				success: function (ret) {
+					console.log(ret);
+					var ob=JSON.parse(ret).data;
+					console.log(ob);
+					for(var i in ob){
+						if(ob[i].undefinedya==yy&&ob[i].ma==mm){
+							alert("登录成功");
+							return false;
+						}else{
+							alert("登录失败");
+						}
+					}
+//					if(ob.ya==yy&&ob.ma==mm){
+//						alert("登录成功");
+//					}else{
+//						alert("登录失败")
+//					}
+//					if(ret=="登录成功"){
+//						alert("登录成功");
+//					}else{
+//						alert("登录失败");
+//					}
+				},error: function (error) {
+					console.log(error);
+				}
+			});
+
+
+	});
+	//点击立即注册跳转到我的页面
+	$("#zc").click(function () {
+		$(".zjb-foot>ul>li").eq(3).addClass("active").siblings().removeClass("active");
+		qh.slideTo(3);
+	});
+	//当点击注册时登录隐藏，注册显示
+	$("#ds").click(function () {
+		var ya = $("#ya").val();
+		var ma = $("#ma").val();
+	if(ya==""&&ma==""){
+		alert("错误");
+	}else{
+		$.ajax({
+			type: "POST",
+			url: "http://localhost:3000/api/zc",
+			data: {
+				ya: ya,
+				ma: ma
+			},
+			success: function (ret) {
+				console.log(ret);
+				if (ret == "注册成功") {
+					alert("注册成功");
+				} else {
+					alert("注册失败");
+				}
+			}, error: function (error) {
+				console.log(error);
+			}
+
+		})
+	}
+	});
+	//点击我的页面返回按钮，切换到登录页面
+	$("#za").click(function () {
+		$(".zjb-foot>ul>li").eq(2).addClass("active").siblings().removeClass("active");
+		qh.slideTo(2);
+	});
+</script>

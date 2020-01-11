@@ -1,0 +1,17 @@
+<!--头部引入-->
+<% include ../comman/head.ejs %>
+
+<h1><mark>这是c.ejs文件3333</mark></h1>
+<h2><mark> <%= title%> </mark></h2>
+<ul>
+    <%for(var i=0;i<data.list.length;i++){%>
+    <li> <%= data.list[i]%> </li>
+    <%}%>
+</ul>
+ <%if(fig){%>
+<b>这是判断 <mark>正确的</mark>输出</b>
+<%}else{%>
+<b>这是判断 <mark>错误的</mark>输出</b>
+<%}%>
+<!--底部引入-->
+<% include ../comman/foot.ejs %>

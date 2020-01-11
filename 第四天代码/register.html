@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        *{margin: 0; padding: 0;}
+        .header{min-width: 320px; color: #fff; font-size: 14px; max-width: 640px; margin: 0 auto; background: mediumpurple; text-align: center; height: 30px; line-height: 30px;}
+        .footer{width: 100%; z-index: 9999; padding-top: 10px; background: #ddd; color: #333; position: fixed; bottom: 0; left: 0;}
+        .footer ul{display: flex; list-style: none;}
+        .footer ul li{width: 25%; text-align: center; height: 35px; line-height: 35px;}
+        .footer ul li a{text-decoration: none; color: #333;}
+        .register{padding: 20px; text-align: center;}
+        .register input{border: 1px solid #ccc; width: 220px; height: 30px;}
+        .register div{padding: 10px 0;}
+        .register .register_btn button{border: 1px solid #ccc; background: #ddd; width: 180px; height: 30px;}
+        .register a{font-size: 12px; text-decoration: none; float: right; padding-right: 10px;}
+        .register h3{text-align: center; font-size: 18px; color: #333;}
+    </style>
+</head>
+<body>
+
+<div class="header">我的</div>
+
+<div class="register">
+    <h3>注册</h3>
+    <div class="register_name">
+        <label for="">用户名:</label>
+        <input type="text" placeholder="请输入用户名">
+    </div>
+    <div class="register_pass">
+        <label for="">密&nbsp;&nbsp; 码:</label>
+        <input type="password" placeholder="请输入密码">
+    </div>
+    <div class="register_btn">
+        <button>注册</button>
+    </div>
+
+    <a href="login.html">立即登录</a>
+</div>
+
+<div class="footer">
+    <ul>
+        <li><a href="index.html">首页</a></li>
+        <li><a href="#">留言</a></li>
+        <li><a href="#">列表</a></li>
+        <li><a href="login.html">我的</a></li>
+    </ul>
+</div>
+</body>
+</html>
+<script src="js/jquery-1.11.2.min.js"></script>
+<script>
+    $(".register_btn button").click(function () {
+        //获取输入的用户名
+        var user = $(".register_name input").val();
+        //获取输入的密码
+        var pass = $(".register_pass input").val();
+        //通过ajax发送到后台
+        $.ajax({
+            url : "http://localhost:3000/api/register",
+            type : "POST",
+            data : {
+                name : user,
+                pass : pass
+            },
+            success : function (response) {
+                if(response == "写入成功"){
+                    alert("注册成功")
+                    setTimeout(function () {
+                        location.href = "login.html"
+                    },1500)
+                }else{
+                    alert("注册失败")
+                }
+            },
+            error : function (error) {
+                console.log(error);
+            }
+        })
+    })
+</script>

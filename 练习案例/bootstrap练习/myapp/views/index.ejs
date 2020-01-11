@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,
+  maximum-scale=1,user-scalable=no">
+    <title>bootstarp练习</title>
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <style>
+    table  {
+      margin:100px 0;
+      /*line-height:20px;*/
+    }
+   table th{
+      text-align: center;
+   }
+    .zc{
+      height:10000px;
+    }
+  </style>
+</head>
+<body>
+ <div class="container zc">
+   <!--表单-->
+   <form>
+     <div class="form-group">
+       <label for="exampleInputXh">学号：</label>
+       <input type="text" class="form-control a" id="exampleInputXh" placeholder="请输入学号">
+     </div>
+     <div class="form-group">
+       <label for="exampleInputMa">姓名：</label>
+       <input type="text" class="form-control b" id="exampleInputMa" placeholder="请输入姓名">
+     </div>
+     <div class="form-group">
+       <label for="exampleInputDate">出生年月：</label>
+       <input type="date" class="form-control c" id="exampleInputDate" placeholder="请输入年/月/日">
+     </div>
+     <div class="form-group">
+       <label for="exampleInputXl">班级</label>
+       <select name="" id="exampleInputXl" class="form-control d">
+         <option value="请选择班级">请选择班级</option>
+         <option value="1904A">1904A</option>
+         <option value="1905A">1905A</option>
+       </select>
+     </div>
+     <div class="form-group">
+       <label for="">性别：</label>
+       <div >
+         <input type="radio" name="sex" value="男" class="ee" checked="checked"> 男
+         <input type="radio" name="sex" value="女" > 女
+       </div>
+     </div>
+     <button type="button" class="btn btn-default bt">提交</button>
+     <button type="reset" class="btn btn-default">重置</button>
+   </form>
+   <!--表格-->
+   <table class="table table-bordered text-center cc">
+   <thead>
+   <tr>
+     <th>学号</th>
+     <th>姓名</th>
+     <th>出生年月</th>
+     <th>班级</th>
+     <th>性别</th>
+     <th>操作</th>
+   </tr>
+   </thead>
+    <tbody>
+    <%for(var i=0;i<cz.length;i++){%>
+    <tr>
+      <td><%= cz[i].id%></td>
+      <td><%= cz[i].name%></td>
+      <td><%= cz[i].date%></td>
+      <td><%= cz[i].class%></td>
+      <td><%= cz[i].sex%></td>
+      <td>
+        <button type="button" class="btn btn-warning pp">删除</button>
+        <button type="button" class="btn btn-danger bb">修改</button>
+      </td>
+    </tr>
+    <%}%>
+    </tbody>
+
+     <!--<tr>-->
+       <!--<td>01</td>-->
+       <!--<td>张三</td>-->
+       <!--<td>1994-01-20</td>-->
+       <!--<td>1904A</td>-->
+       <!--<td>男</td>-->
+       <!--<td>-->
+         <!--<button type="button" class="btn btn-default">删除</button>-->
+         <!--<button type="button" class="btn btn-default">修改</button>-->
+       <!--</td>-->
+     <!--</tr>-->
+     <!--<tr>-->
+       <!--<td>02</td>-->
+       <!--<td>李四</td>-->
+       <!--<td>1993-01-20</td>-->
+       <!--<td>1904A</td>-->
+       <!--<td>男</td>-->
+       <!--<td>-->
+         <!--<button type="button" class="btn btn-default">删除</button>-->
+         <!--<button type="button" class="btn btn-default">修改</button>-->
+       <!--</td>-->
+     <!--</tr>-->
+     <!--<tr>-->
+       <!--<td>03</td>-->
+       <!--<td>王五</td>-->
+       <!--<td>1993-01-20</td>-->
+       <!--<td>1904A</td>-->
+       <!--<td>男</td>-->
+       <!--<td>-->
+         <!--<button type="button" class="btn btn-default">删除</button>-->
+         <!--<button type="button" class="btn btn-default">修改</button>-->
+       <!--</td>-->
+     <!--</tr>-->
+     <tfoot>
+     <tr>
+       <td colspan="6">
+         <button type="button" class="btn btn-default delAll">全删</button>
+       </td>
+     </tr>
+     </tfoot>
+   </table>
+ </div>
+
+</body>
+</html>
+<script src="js/jquery-3.4.1.js"></script>
+<script src="js/bootstrap.js"></script>
+
+<script>
+  //用ajax在读取/read中的数据，在创建添加到tbody中，从而实现局部刷新
+  function add(){
+    //当写入成功时，让tbody中的内容都变空
+    $("tbody").html("");
+    //用ajax在读取/read中的数据，在创建添加到tbody中，从而实现局部刷新
+    $.ajax({
+      url:"/read",
+      success: function (ret) {
+        console.log(ret);
+        console.log(ret.data);
+        if(ret.code==0){
+          var a=ret.data;
+          var str='';
+          for(var i=0;i<a.length;i++){
+            str+=`<tr>
+                  <td>${a[i].id}</td>
+                  <td>${a[i].name}</td>
+                  <td>${a[i].date}</td>
+                  <td>${a[i].class}</td>
+                  <td>${a[i].sex}</td>
+                  <td>
+                   <button type="button" class="btn btn-warning pp">删除</button>
+                   <button type="button" class="btn btn-danger bb">修改</button>
+                  </td>
+                        </tr>`
+          }
+          $("tbody").html(str);
+          $(".a").val("");
+          $(".b").val("");
+          $(".c").val("");
+          $(".d").val("请选择班级");
+          $(".ee").prop("checked",true);
+        }
+      },error: function (msg) {
+        console.log(msg)
+      }
+    })
+  };
+
+  //写入数据
+  $(".bt").click(function () {
+    //获取val值
+    var a=$(".a").val();
+    var b=$(".b").val();
+    var c=$(".c").val();
+    var d=$(".d").val();
+   var xb=$("input:checked").val();
+//    var xb=$(".ee").prop("checked",true);
+    //ajax
+    if(a==""||b==""||c==""||d==""){
+      alert("内容不能为空")
+    }else{
+      $.ajax({
+        url:"/write",
+        data:{
+          id:a,
+          name:b,
+          date:c,
+          class:d,
+          sex:xb
+        },
+        success: function (ret) {
+          console.log(ret)
+          if(ret=="写入成功"){
+            //当写入成功时，让tbody中的内容都变空
+//             $("tbody").html("");
+            //封装一个函数，并调用
+            add();
+//          $("tbody").html("");
+            //用ajax在读取/read中的数据，在创建添加到tbody中，从而实现局部刷新
+
+          }
+        },error: function (error) {
+          console.log(error)
+        }
+      })
+    }
+
+  });
+
+  //单行删除数据
+  //事件委托
+ $("body").on("click",".pp",function () {
+//   alert(111)
+
+     //找到当前删除按钮的父亲下的第一个数据id，获取id 的内容
+     var a=$(this).parents("tr").children().eq(0).html();
+   alert(a)
+
+     $.ajax({
+       url:"/sc",
+       data:{
+         id:a
+       },
+       success: function (ret) {
+         console.log(ret);
+         if(ret=="删除成功"){
+           add()
+//           $("tbody").html("");
+           //用ajax在读取/read中的数据，在创建添加到tbody中，从而实现局部刷新
+
+         }
+       },
+       error: function (error) {
+         console.log(error)
+       }
+     })
+
+
+
+ });
+
+ //全部删除
+  $(".delAll").click(function () {
+    $.ajax({
+      url:"/delAll",
+      success:function (ret) {
+        console.log(ret);
+        add();
+      },error:function (msg) {
+        console.log(msg);
+      }
+    })
+  })
+
+  //修改数据
+    $("body").on("click",".bb",function () {
+
+    //当点击修改按钮的时候，正行背景颜色变色
+    $(this).parents("tr").css({background:"greenyellow"})
+    var a=$(this).parents("tr").children().click(function () {
+      //点击那个内容，当前背景颜色变色，他的其他兄弟都不变
+      $(this).css({background:"#ccc"}).siblings().css({background:""});
+      //获取当前的内容
+      var da=$(this).html();
+      alert(da)
+      //获取当前的下标
+      var db=$(this).index();
+      alert(db);
+      //获取当前修改后的内容
+      var dc=prompt("请输入要修改的内容");
+      $.ajax({
+        url:"/xg",
+        data:{
+          a:da,
+          b:db,
+          c:dc
+        },
+        success:function(ret){
+          console.log(ret);
+          if(ret=="修改成功"){
+            location.href="/";
+          }
+        },error: function (error) {
+          console.log(error)
+        }
+      })
+    })
+  });
+</script>

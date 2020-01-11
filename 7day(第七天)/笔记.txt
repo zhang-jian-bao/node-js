@@ -1,0 +1,71 @@
+## 如何使用模版引擎
+
+    1. 在项目的根目录下创建views文件夹
+
+    2. 在views这个文件夹里面创建模版引擎文件
+
+            index.ejs
+            list.ejs
+            news.ejs
+
+    3. 配置路由，让他加载（渲染）不同的模版引擎文件
+        app.get("/",function(req,res,next){
+            res.render("index")
+        })
+
+    4. 这个时候还不能渲染出来，还需要安装模版引擎ejs
+
+        cnpm install ejs --save
+
+    5. 配置模版引擎
+
+        //指定视图的引擎为ejs
+        app.set("view engine","ejs");
+
+        //指定模版的位置
+        app.set("views",__dirname + "/views");
+
+    6. 这个时候我们就可以模版的内容渲染到浏览器
+
+## 如何给模版引擎传递数据
+
+    res.render("模版文件的名称",{这个对象里面写的就是我们要传递的数据})
+
+
+## 模版的语法
+
+    如何输入一个变量的值 <%= 变量名%>
+
+    如何执行js语句（这里所说的js语句其实指的是 流程控制语句以及for循环语句）
+    <% js语句 %>
+
+    如何引入一个文件    <% include 文件的地址 %>
+
+## 如何将ejs后缀名改为html的后追名
+
+    引入ejs
+        var ejs = require("ejs");
+
+    设置
+        app.engine("html",ejs.__express);
+
+    将视图的模版引擎设置为html
+        app.set("view engine","html")
+
+    将模版引擎文件的后缀名ejs改为html
+
+
+## path模块
+
+    __dirname   获取的是当前文件所在的目录路径
+
+    __filename  获取当前文件所在的路径
+
+
+    path.parse()   获取当前文件的路径： 其中包含了 根路径 相对路径  文件名加后缀名   后缀名  文件名
+    path.join()    主要用于路径的拼接
+
+
+
+
+

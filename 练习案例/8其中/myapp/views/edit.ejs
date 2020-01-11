@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<script src="js/jquery-3.4.1.js"></script>
+<body>
+<h2>用户信息修改</h2>
+<p>
+    <label for="">用户名：</label>
+    <input id="name" type="text">
+</p>
+<p>
+    <label for="">性别：</label>
+    男：<input class="sex" name="m" type="radio" value="男">
+    女：<input class="sex" name="m" type="radio" value="女">
+</p>
+<p>
+    <label for="">年龄：</label>
+    <input id="age" type="text">
+</p>
+<p>
+    <label for="">电话：</label>
+    <input id="phone" type="text">
+</p>
+<button id="sub">更新</button>
+</body>
+<script>
+
+
+
+
+
+    $("#sub").click(function () {
+        var name1 = window.location.href;
+        //2. 用 ? 分隔拿到数组：['http://localhost:8080/mb','name=xxxx']
+        var arr = name1.split("?");
+        console.log(arr)
+        //3. 用正则拼成对象：{“name”：“xxx”}
+        var obj = "{\""+arr[1].replace(/=/g,"\":\"").replace("&","\",\"")+"\"}";
+        //4. JSON.parse()方法将数据转换为JavaScript对象。
+        var json = JSON.parse(obj);
+        // json.name = xxxx
+        var a = json._id;
+        var name = $("#name").val();
+        var sex = $(".sex").val();
+        var age = $("#age").val();
+        var phone = $("#phone").val();
+        //发送数据修改的数据给后台处理
+
+        $.ajax({
+            url:"/api/edit",
+            data:{
+                qq:{
+                    _id:a
+                },
+                ww:{
+                    name:name,
+                    sex:sex,
+                    age:age,
+                    tel:phone
+                }
+            },
+            success: function (ret) {
+                if(ret.code==0){
+                    location.href="http://localhost:3000/list"
+                }
+            }
+        })
+    })
+</script>
+</html>

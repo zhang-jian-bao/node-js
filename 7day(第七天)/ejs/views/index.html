@@ -1,0 +1,21 @@
+
+    <% include common/header.ejs%>
+
+
+    <h1>我是首页, 我的名字是 <%=title%></h1>
+
+    <ul>
+
+        <% for(var i=0;i<data.arr.length;i++){%>
+            <li><%= data.arr[i] %></li>
+        <% }%>
+    </ul>
+
+    <% if(flag) {%>
+        <div>嗨,请登录</div>
+    <% } else{%>
+        <div>欢迎您,jack</div>
+    <%}%>
+
+<% include common/footer.ejs%>
+

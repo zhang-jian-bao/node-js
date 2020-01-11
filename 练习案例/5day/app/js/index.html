@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>express练习</title>
+</head>
+<body>
+<button>get请求</button>
+<button>post请求</button>
+<button>get和post都可以请求</button>
+</body>
+</html>
+<script src="jquery-3.4.1.js"></script>
+<script>
+    $("button").eq(0).click(function () {
+        $.ajax({
+            url:"http://localhost:8080/123",
+            data:{
+                name:"jack",
+                pass:123
+            },
+            success: function (ret) {
+                console.log(ret);
+            },error: function (error) {
+                console.log(error);
+            }
+        })
+    });
+    $("button").eq(1).click(function () {
+        $.ajax({
+            type:"POST",
+            url:"http://localhost:8080/api/cc/345",
+            data:{
+                key:"hello",
+                pass:"world"
+            },
+            success: function (ret) {
+                console.log(ret);
+            },error: function (error) {
+                console.log(error);
+            }
+        })
+    });
+    $("button").eq(2).click(function () {
+        $.ajax({
+            type:"POST",
+            url:"http://localhost:8080/api/list",
+            success: function (ret) {
+                console.log(ret);
+            },error: function (error) {
+                console.log(error);
+            }
+        })
+    })
+</script>

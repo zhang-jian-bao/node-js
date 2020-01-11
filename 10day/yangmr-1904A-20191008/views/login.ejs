@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>我是登录页面</h1>
+
+    <hr>
+    <form action="/dologin" method="post">
+        <p>
+            <label for="">用户名:</label>
+            <input type="text" name="name" id="name">
+        </p>
+        <p>
+            <label for="">密码：</label>
+            <input type="password" name="pass" id="pass">
+        </p>
+        <p>
+            <input type="submit" value="登录">
+        </p>
+    </form>
+
+</body>
+</html>
+<script src="js/jquery-1.11.2.min.js"></script>
+<script>
+
+    // $("button").click(function () {
+    //    $.ajax({
+    //        url : "/dologin",
+    //        type :"POST",
+    //        data : {
+    //            name : $("#name").val(),
+    //            pass : $("#pass").val()
+    //        },
+    //        success : function (response) {
+    //            console.log(response)
+    //            if(response.code == 0){
+    //                window.location.href = "/success"
+    //            }else{
+    //                window.location.href = "/login"
+    //            }
+    //        },
+    //        error : function (error) {
+    //            console.log(error)
+    //        }
+    //    })
+    // })
+
+</script>

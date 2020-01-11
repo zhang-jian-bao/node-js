@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="wrap">
+
+        <div class="search">
+            <input type="text" class="task" placeholder="请输入添加的任务">
+        </div>
+
+        <div class="box">
+            <ul>
+
+<!--                <li>-->
+<!--                    <input type="checkbox">-->
+<!--                    <span>今天一定不能迟到</span>-->
+<!--                    <button>删除</button>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <input type="checkbox">-->
+<!--                    <span>今天一定不能迟到</span>-->
+<!--                    <button>删除</button>-->
+<!--                </li><li>-->
+<!--                    <input type="checkbox">-->
+<!--                    <span>今天一定不能迟到</span>-->
+<!--                    <button>删除</button>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <input type="checkbox">-->
+<!--                    <span>今天一定不能迟到</span>-->
+<!--                    <button>删除</button>-->
+<!--                </li>-->
+
+            </ul>
+            <div>
+                选中<strong></strong>个
+                <button class="all-del">全部删除</button>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
+<script src="js/jquery.min.js"></script>
+<script>
+
+    $("strong").html("0")
+
+    //读取数据库的数据，并进行渲染
+    function read(){
+        $.ajax({
+            url : "/api/read",
+            success : function (response) {
+                $(".box ul").html(" ");
+
+                for(var i=0;i<response.data.length;i++){
+                    var li = document.createElement("li");
+                    li.innerHTML = `
+
+                        <input  class="check" type="checkbox">
+                        <span>${response.data[i].text}</span>
+                        <button class="del" v="${response.data[i]._id}">删除</button>
+
+                    `;
+
+                    $(".box ul").prepend(li);
+
+                }
+
+                //选中或不选中的代码
+                $(".check").each(function (index,item) {
+                    $(this).prop("checked",response.data[index].checked)
+                    $(this).attr("v",response.data[index]._id)
+
+                    $("strong").html($(".check:checked").length)
+
+                })
+
+            },
+            error : function (error) {
+                console.log(error);
+            }
+        })
+    }
+    read();
+
+
+    //获取当前输入任务的文本框，当点击回车键时，将文本框输入的数据发送到后台
+    $(".task").keydown(function (e) {
+        if(e.keyCode == 13){
+            //获取到文本框输入的内容
+            var tValue = $(this).val();
+
+            //通过ajax发送到后台
+            $.ajax({
+                url : "/api/add",
+                data : {
+                    text : tValue,
+                    checked : true
+                },
+                success : function (response) {
+                    console.log(response);
+                    if(response.code ==0){
+                        read();
+                        $(".task").val("")
+                    }
+                },
+                error : function (error) {
+                    console.loog(error);
+                }
+            })
+        }
+    })
+
+
+    //删除功能
+    $(".box ul").on("click",".del",function () {
+        $.ajax({
+            url : "/api/del",
+            data : {
+                _id : $(this).attr("v")
+            },
+            success : function (response) {
+                console.log(response);
+                if(response.code == 0){
+                    read();
+                }
+            },
+            error : function (error) {
+                console.log(error);
+            }
+        })
+    });
+
+    //删除全部数据
+    $(".all-del").click(function () {
+       $.ajax({
+           url : "/api/remove",
+           success : function (response) {
+               if(response.code ==0){
+                   $("ul").html("")
+               }
+           },
+           error : function (error) {
+               console.log(error)
+           }
+       })
+    });
+
+
+    //选中效果
+    $(".box ul").on("click",".check",function () {
+      var bool = $(this).prop("checked");
+
+      $.ajax({
+          url : "/api/update",
+          data:{
+              f : {
+                  _id : $(this).attr("v")
+              },
+              c : {
+                  checked : bool
+              }
+          },
+          success : function (response) {
+              console.log(response)
+              if(response.code ==0){
+
+                  read();
+              }
+          },
+          error : function (error) {
+              console.log(error)
+          }
+      })
+    })
+</script>

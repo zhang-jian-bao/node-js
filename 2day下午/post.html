@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--通过ajax来完成登陆功能-->
+
+
+<form>
+    
+    <p>
+        <label for="">用户名:</label>
+        <input id="user" type="text" name="user">
+    </p>
+
+    <p>
+        <label for="">密码:</label>
+        <input id="pass" type="text" name="pass">
+    </p>
+
+    <p>
+        <input id="btn" type="button" value="登陆">
+    </p>
+    
+</form>
+
+</body>
+</html>
+<!--引入jquery-->
+<script src="js/jquery-1.11.2.min.js"></script>
+<script>
+
+    $("#btn").click(function () {
+        //获取输入用户名
+       var user = $("#user").val();
+        //获取输入的密码
+       var pass = $("#pass").val();
+
+       //发送ajax，把用户名和密码发送到后台
+        $.ajax({
+            type : "POST",
+            url : "http://localhost:8888",
+            data : {
+                user : user,
+                pass : pass
+            },
+            success : function (response) {
+                console.log(response)
+                if(response == "登陆成功"){
+                    alert("登陆成功")
+                }else{
+                    alert("用户名或密码错误")
+                }
+            },
+            error : function (error) {
+                console.log(error)
+            }
+        })
+    })
+
+
+</script>

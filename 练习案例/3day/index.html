@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link rel="stylesheet" href="css/swiper-3.4.2.min.css" />
+		<link rel="stylesheet" href="css/index.css" />
+		<script src='js/iscroll-probe.js'></script>
+		<script src='js/jquery-3.4.1.js'></script>
+		<script src='js/swiper-3.4.2.min.js'></script>
+		<script src='js/rem.js'></script>
+	</head>
+	<body>
+		<div class="swiper-container qh">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide">
+					<div class="zjb-heard">头部</div>
+					<div class="zjb-box">
+						<div class="zjb-con">
+							<div class="swiper-container banner">
+								<div class="swiper-wrapper">
+									<!--<div class="swiper-slide"><img src="img/banner%20(1).jpg" alt=""></div>-->
+									<!--<div class="swiper-slide"><img src="img/banner%20(1).png" alt=""></div>-->
+									<!--<div class="swiper-slide"><img src="img/banner%20(2).png" alt=""></div>-->
+									<!--<div class="swiper-slide"><img src="img/banner%20(3).png" alt=""></div>-->
+								</div>
+								<div class="swiper-pagination"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="swiper-slide">
+					<div class="ly">
+						<!--<form action="http://localhost:3000/api/list" method="get">-->
+							<label for="yh">用户名：</label>
+							<input type="text" id="yh"><br>
+							<label for="ly">留言板：</label>
+							<textarea name="" id="ly" cols="30" rows="10"></textarea><br>
+							<input type="button" value="发送" id="bt">
+						<!--</form>-->
+					</div>
+				</div>
+				<div class="swiper-slide">
+					<div class="aa">
+						<ul>
+
+						</ul>
+					</div>
+				</div>
+				<div class="swiper-slide">我的</div>
+			</div>
+		</div>
+		<div class="zjb-foot">
+			<ul>
+				<li class="active">首页</li>
+				<li>留言</li>
+				<li>列表</li>
+				<li>我的</li>
+			</ul>
+		</div>
+	</body>
+</html>
+<script>
+	//阻止浏览器自带的touchmove事件
+	document.addEventListener('touchmove',function(event){
+		event.preventDefault();
+	},{passive:false});
+	//首页内容滚动区
+	var zjbSc=new IScroll('.zjb-box',{});
+	//尾部点击切换整体页面
+	var qh=new Swiper(".qh",{
+		onSlideChangeEnd:function(swiper){
+			var k=swiper.activeIndex;
+			$(".zjb-foot>ul>li").eq(k).addClass("active").siblings().removeClass("active");
+		}
+	});
+	$(".zjb-foot>ul>li").click(function () {
+		$(this).addClass("active").siblings().removeClass("active");
+		var i=$(this).index();
+		qh.slideTo(i);
+	});
+
+	//ajax渲染轮播图
+	$(function () {
+		$.ajax({
+			type:"get",
+			url:"http://localhost:3000/api/banner",
+			async:true,
+			data:{},
+			success: function (ret) {
+				console.log(ret+"成功");
+				var da=JSON.parse(ret).banner;
+				console.log(da);
+				$.each(da,function (index, data) {
+					var c=$("<div class='swiper-slide'><img src='"+data+"'></div>");
+					$(".banner>.swiper-wrapper").append(c);
+					//首页轮播图
+					var banner=new Swiper(".banner",{
+						autoplay:1500,
+						speed:500,
+						effect:"flip",
+						pagination:".swiper-pagination",
+						paginationClickable:true
+					})
+				})
+
+			},error: function (msg) {
+				console.log(msg+"错误");
+			}
+		});
+		//留言板的ajax
+		var cc=2;
+		$("#bt").click(function () {
+			var yh=$("#yh").val();
+			var ly=$("#ly").val();
+			$.ajax({
+				type:"get",
+				url:"http://localhost:3000/api/list",
+				async:true,
+				data:{
+					name:yh,
+					uly:ly
+				},
+				success: function (ret) {
+					console.log(ret);
+					if(ret=="写入成功"){
+						setInterval(function () {
+							qh.slideTo(cc);
+							$(".zjb-foot>ul>li").eq(cc).addClass("active").siblings().removeClass("active");
+						},2000)
+					}
+				},error: function (msg) {
+					console.log(msg);
+				}
+			})
+		});
+		//列表读取数据
+		$.ajax({
+			type:"get",
+			url:"http://localhost:3000/api/show",
+			async:true,
+			data:{},
+			success: function (ret) {
+				console.log(ret);
+//				var da=JSON.parse(ret);
+				var cj=$("<li>"+ret+"</li>");
+				$(".aa>ul").append(cj);
+			},error: function (msg) {
+				console.log(msg);
+			}
+		})
+	});
+
+
+</script>

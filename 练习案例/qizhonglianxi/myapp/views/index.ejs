@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>其中练习</title>
+  <link rel="stylesheet" href="css/swiper-3.4.2.min.css" />
+  <link rel="stylesheet" href="css/moban.css" />
+  <script src='js/iscroll-probe.js'></script>
+  <script src='js/jquery-3.4.1.js'></script>
+  <script src='js/swiper-3.4.2.min.js'></script>
+  <script src='js/rem%20.js'></script>
+
+</head>
+<body>
+<div class="zjb-heard">头部</div>
+<div class="zj">
+  <div class="left">
+    <div class="box">
+      <div class="con">
+        <ul>
+          <li class="one">首页</li>
+          <%for(var i=0;i<list.length;i++){%>
+          <li><%= list[i]%></li>
+          <%}%>
+          <!--<li class="one">男鞋</li>-->
+          <!--<li>女鞋</li>-->
+          <!--<li>男装</li>-->
+          <!--<li>女装</li>-->
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="right">
+    <div class="bo">
+      <div class="co">
+      <div class="swiper-container qh">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <div class="swiper-container banner">
+              <div class="swiper-wrapper">
+                <%for(var k=0;k<banner.length;k++){%>
+                  <div class="swiper-slide"><img src="<%= banner[k]%>" alt=""></div>
+                <%}%>
+              </div>
+              <!--<div class="swiper-slide"><img src="img/banner.jpg" alt=""></div>-->
+              <!--<div class="swiper-slide"><img src="img/banner.jpg" alt=""></div>-->
+              <!--<div class="swiper-slide"><img src="img/banner.jpg" alt=""></div>-->
+              <!--<div class="swiper-slide"><img src="img/banner.jpg" alt=""></div>-->
+
+            </div>
+            <ul>
+              <%for(var q=0;q<a.length;q++){%>
+              <li><img src="<%=a[q].img%>" alt=""><a href="#"><%=a[q].text%></a></li>
+              <%}%>
+              <!--<li><img src="img/a_03.jpg" alt=""><a href="#">女装新品</a></li>-->
+              <!--<li><img src="img/a_05.jpg" alt=""><a href="#">商场同款</a></li>-->
+              <!--<li><img src="img/a_07.jpg" alt=""><a href="#">连衣裙</a></li>-->
+              <!--<li><img src="img/a_12.jpg" alt=""><a href="#">卫衣</a></li>-->
+            </ul>
+          </div>
+          <div class="swiper-slide">
+            <ul class="aa">
+              <li>
+                <mark>你是小坏蛋</mark>
+              </li>
+              <li>
+                <mark>你是老骚货</mark>
+              </li>
+              <li>
+                <mark>你是钟林峰</mark>
+              </li>
+              <li>
+                <mark>老屁眼</mark>
+              </li>
+            </ul>
+          </div>
+          <div class="swiper-slide"><mark>3333</mark></div>
+          <div class="swiper-slide"><mark>3333</mark></div>
+          <div class="swiper-slide"><mark>3333</mark></div>
+          <div class="swiper-slide"><mark>3333</mark></div>
+          <div class="swiper-slide">777</div>
+          <div class="swiper-slide">888</div>
+          <div class="swiper-slide">999</div>
+          <div class="swiper-slide">101010</div>
+          <div class="swiper-slide">11111</div>
+          <div class="swiper-slide">121212</div>
+          <div class="swiper-slide">131313</div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="zjb-foot">尾部</div>
+</body>
+</html>
+<script>
+  document.addEventListener('touchmove',function(event){
+    event.preventDefault();
+  },{passive:false})
+//  var zjbSc=new IScroll('.zjb-box',{})
+  var left=new IScroll(".box",{});
+  var right=new IScroll(".bo",{});
+  var banner=new Swiper(".banner",{
+    autoplay:1500
+  })
+  var qh=new Swiper(".qh",{
+    direction:"vertical",
+   onSlideChangeEnd: function (swiper) {
+     var k=swiper.activeIndex;
+     $(".left ul>li").eq(k).addClass("one").siblings().removeClass("one");
+   }
+  });
+  $(".left ul>li").click(function () {
+//    alert(111)
+    $(this).addClass("one").siblings().removeClass("one");
+    var i=$(this).index();
+    qh.slideTo(i);
+  })
+</script>

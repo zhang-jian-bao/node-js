@@ -1,0 +1,157 @@
+/*样式清空*/
+*{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+/*清除图片三要素*/
+img{
+    vertical-align: top;
+}
+/*大盒子布局*/
+.box{
+    width:100%;
+    border: 2px solid #000;
+}
+/*首页， 页脚布局*/
+header,footer{
+    width:100%;
+    height: 30px;
+    background: greenyellow;
+    text-align: center;
+    font-size:24px;
+    font-weight:bolder;
+}
+/*轮播图布局*/
+.banner{
+    width:1000px;
+    height:400px;
+    margin:0 auto;
+    position: relative;
+}
+.banner>ul>li{
+    display: none;
+}
+.banner>ul>li.one{
+    display: block;
+}
+.banner>ul>li>img{
+    position: absolute;
+    top:0;
+    left:0;
+    width:1000px;
+    height:400px;
+}
+.banner>ul>li>p{
+    position: absolute;
+    bottom:0;
+    left:0;
+    width:1000px;
+    height:30px;
+    background:linear-gradient(rgba(0,0,0,0),rgba(0,0,0,0.6));
+    color: #fff;
+    line-height:30px;
+    text-align: center;
+}
+/*按钮布局*/
+.an>span{
+    position: absolute;
+    top:180px;
+    left:0;
+    width:30px;
+    height:40px;
+    text-align: center;
+    background: pink;
+    line-height:40px;
+    font-size:30px;
+}
+.an>span:nth-child(2){
+    left:970px;
+}
+/*小圆点布局*/
+.xyd{
+    position: absolute;
+    bottom:40px;
+    left:412px;
+    /*border: 1px solid #000;*/
+    width:200px;
+}
+.xyd>ul{
+    height:20px;
+    overflow: hidden;
+}
+.xyd>ul>li{
+    float: left;
+    width:15px ;
+    height:15px;
+    border-radius:50%;
+    background: greenyellow;
+    /*border: 1px solid #000;*/
+    margin-left:20px;
+}
+.xyd>ul>li.two{
+    background: red;
+}
+/*内容区域布局*/
+.con{
+    width:100%;
+    border: 1px solid #000;
+    margin-top:20px;
+    overflow: hidden;
+}
+.left,.right{
+    float: left;
+    margin-left:30px;
+    border: 1px solid #000;
+    width:400px;
+}
+.left>ul>li{
+    padding:10px 10px;
+    border-bottom: dashed 1px red;
+}
+.right{
+    margin-left:600px;
+}
+.right>ul{
+    width:100%;
+    height:40px;
+    border-bottom: dashed 1px orange;
+}
+.right>ul>li{
+    float: left;
+    width:50%;
+    text-align: center;
+    line-height:38px;
+}
+.right>ul>li.san{
+    border-bottom: solid 2px blue;
+}
+.right>ol{
+    width:200px;
+    margin:0 auto;
+    text-align: center;
+}
+.right>ol>li{
+    display: none;
+}
+.right>ol>li.four{
+    display: block;
+}
+.right>ol>li>input{
+    width:100%;
+    height:30px;
+    margin-top:20px;
+    text-indent: 2em;
+}
+.right>ol>li>button{
+    width:100%;
+    height:30px;
+    background: blue;
+    color: #fff;
+    font-size:20px;
+    font-weight:bolder;
+    border:none;
+    outline-style:none ;
+    margin-top:20px;
+    margin-bottom:20px;
+}

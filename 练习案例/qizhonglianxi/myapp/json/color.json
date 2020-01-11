@@ -1,0 +1,27 @@
+{
+  "list1":[
+    "京东超市","国际名牌","奢侈品","海囤全球",
+    "唯品会","男装","女装","男鞋","女鞋","内衣配饰",
+    "箱包手袋","美妆护肤","个体清洁"
+  ],
+  "banner":[
+    "img/banner.jpg",
+    "img/banner.jpg",
+    "img/banner.jpg",
+    "img/banner.jpg"
+  ],
+  "list2":[
+    {"img":"img/a_03.jpg","text":"女装新品"},
+    {"img":"img/a_05.jpg","text":"商场同款"},
+    {"img":"img/a_07.jpg","text":"连衣裙"},
+    {"img":"img/a_12.jpg","text":"卫衣"},
+    {"img":"img/a_13.jpg","text":"休闲裤"},
+    {"img":"img/a_03.jpg","text":"女装新品"},
+    {"img":"img/a_05.jpg","text":"商场同款"},
+    {"img":"img/a_07.jpg","text":"连衣裙"},
+    {"img":"img/a_13.jpg","text":"休闲裤"},
+    {"img":"img/a_07.jpg","text":"连衣裙"},
+    {"img":"img/a_13.jpg","text":"休闲裤"},
+    {"img":"img/a_13.jpg","text":"休闲裤"}
+  ]
+}

@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!--引入bootstrap.css文件-->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <style>
+        h3{font-size: 16px; height: 35px; line-height: 35px; border-bottom: 1px solid #ccc;}
+        form{padding: 15px 0; border-bottom: 1px solid #ccc;}
+        table{margin-top: 20px;}
+        /*.form-group input{padding-left: 50px;}*/
+        /*.form-group label{position: relative; left: 10px;}*/
+        /*.form-group select {width: 300px;}*/
+    </style>
+</head>
+<body>
+        <div class="container">
+            <h3>添加商品</h3>
+
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="exampleInputId">ID:</label>
+                    <input type="text" class="form-control" id="exampleInputId" placeholder="请输入id">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputName">NAME:</label>
+                    <input type="text" class="form-control" id="exampleInputName" placeholder="请输入名称">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputSearch">搜索:</label>
+                    <input type="text" class="form-control" id="exampleInputSearch" placeholder="请输入搜索的内容">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputType">类型:</label>
+                    <select name="" id="exampleInputType" class="form-control">
+                        <option value="豪车">豪车</option>
+                        <option value="一般车">一般车</option>
+                        <option value="自行车">自行车</option>
+                    </select>
+                </div>
+                <button type="button" class="btn add btn-primary">添加</button>
+            </form>
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>Name</th>
+                        <th>ctime</th>
+                        <th>type</th>
+                        <th>options</th>
+                    </tr>
+                </thead>
+                <tbody>
+<!--                    <tr>-->
+<!--                        <td>1</td>-->
+<!--                        <td>宝马</td>-->
+<!--                        <td>2019年-10月-15日 14点28分10秒</td>-->
+<!--                        <td>豪车</td>-->
+<!--                        <td><a href="javascript:;">删除</a></td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>1</td>-->
+<!--                        <td>宝马</td>-->
+<!--                        <td>2019年-10月-15日 14点28分10秒</td>-->
+<!--                        <td>豪车</td>-->
+<!--                        <td><a href="javascript:;">删除</a></td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>1</td>-->
+<!--                        <td>宝马</td>-->
+<!--                        <td>2019年-10月-15日 14点28分10秒</td>-->
+<!--                        <td>豪车</td>-->
+<!--                        <td><a href="javascript:;">删除</a></td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>1</td>-->
+<!--                        <td>宝马</td>-->
+<!--                        <td>2019年-10月-15日 14点28分10秒</td>-->
+<!--                        <td>豪车</td>-->
+<!--                        <td><a href="javascript:;">删除</a></td>-->
+<!--                    </tr>-->
+                </tbody>
+            </table>
+        </div>
+
+
+
+</body>
+</html>
+<!--引入jquery.js-->
+<script src="js/jquery.min.js"></script>
+<!--引入bootstrap.js-->
+<script src="js/bootstrap.min.js"></script>
+
+<script>
+    //等待页面所有dom元素加载完毕之后在执行
+    $(function () {
+        function read(){
+            // 读取数据
+            $.ajax({
+                url : "/api/read",
+                success : function (response) {
+                    $("tbody").html(" ");
+                    console.log(response)
+                    for(var i=0;i<response.data.length;i++){
+                        var tr = document.createElement("tr");
+                        tr.innerHTML = `
+                            <td>${response.data[i].id}</td>
+                            <td>${response.data[i].name}</td>
+                            <td>${response.data[i].date}</td>
+                            <td>${response.data[i].type}</td>
+                            <td><a class="del" v="${response.data[i]._id}" href="javascript:;">删除</a></td>
+                    `;
+                        $("tbody").append(tr);
+                    }
+                },
+                error : function (error) {
+                    console.log(error)
+                }
+            })
+        }
+
+        read()
+
+
+
+        //添加功能
+        $(".add").click(function () {
+            //获取输入的id值
+            var cid = $("#exampleInputId").val();
+            //获取输入的name值
+            var cname = $("#exampleInputName").val();
+            //获取输入的类型
+            var ctype = $("#exampleInputType").val();
+            //判断id是否为空
+            if(cid == ""){
+                alert("请输入id");
+                return false;
+            }
+            //判断name是否为空
+            if(cname == ""){
+                alert("请输入name");
+                return false;
+            }
+            //发送ajax请求，将数据发送给后台
+            $.ajax({
+                url : "/api/add",
+                data : {
+                    id : cid,
+                    name : cname,
+                    type : ctype
+                },
+                success : function (response) {
+                    console.log(response);
+                    if(response.code == 0){
+                        read();
+                    }
+                },
+                error : function (error) {
+                    console.log(error);
+                }
+            })
+        })
+
+        //删除功能
+        $("tbody").on("click",".del",function () {
+            $.ajax({
+                url : "/api/del",
+                data : {
+                  _id :   $(this).attr("v")
+                },
+                success : function (response) {
+                    console.log(response);
+                    if(response.code ==0){
+                        read();
+                    }
+                },
+                error : function (error) {
+                    console.log(error);
+                }
+            })
+        });
+
+
+        //搜索功能
+        $("#exampleInputSearch").on("input",function () {
+            if($(this).val() == ""){
+                read();
+            }else{
+                $.ajax({
+                    url : "/api/query",
+                    data : {
+                        name : $(this).val()
+                    },
+                    success : function (response) {
+                        $("tbody").html(" ");
+                      
+                        for(var i=0;i<response.data.length;i++){
+                            var tr = document.createElement("tr");
+                            tr.innerHTML = `
+                            <td>${response.data[i].id}</td>
+                            <td>${response.data[i].name}</td>
+                            <td>${response.data[i].date}</td>
+                            <td>${response.data[i].type}</td>
+                            <td><a class="del" v="${response.data[i]._id}" href="javascript:;">删除</a></td>
+                    `;
+                            $("tbody").append(tr);
+                        }
+                    },
+                    error : function (error) {
+                        console.log(error);
+                    }
+                })
+            }
+
+        })
+    })
+
+</script>

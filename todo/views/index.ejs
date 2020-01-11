@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .box{
+            width: 80%;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+        <div class="box">
+          <p><input type="text" placeholder="任务清单" id="username"></p>
+            <div class="cont">
+                <h2>任务已完成</h2>
+                <ul></ul>
+                <h2>任务待完成</h2>
+                <ol></ol>
+            </div>
+
+          <div><label for="">全选:</label><input type="checkbox"> <button id="delAll">全部删除</button></div>
+        </div>
+
+
+</body>
+</html>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+  //添加数据
+    $("#username").keydown(function (e) {
+      if(e.keyCode==13){
+       $.ajax({
+         url:"api/add",
+         data:{
+           name:$(this).val(),
+           bool:false
+         },
+         success:function (res) {
+           if(res.code==0){
+             load()
+           }
+         },
+         error:function (err) {
+           console.log(err)
+         }
+       })
+      }
+    })
+  //封装获取数据
+  load()
+  function load() {
+    $.ajax({
+      url:"/api/see",
+      success:function (res) {
+        $("ul").html("");
+        $("ol").html("");
+        $(res.data).each(function (index,item) {
+            console.log(item)
+          if(item.bool){
+              //任务已完成的状态渲染
+            str=`
+            <li>
+                <input type="checkbox" checked v="${item._id}"> <span>${item.name}</span> <button del="${item._id}">删除</button>
+            </li>
+            `
+          $("ul").append(str);
+          }else {
+              //任务未完成的状态渲染
+            str=`
+            <li>
+                <input type="checkbox"  v="${item._id}"> <span>${item.name}</span> <button del="${item._id}">删除</button>
+            </li>
+            `
+            $("ol").append(str);
+          }
+        })
+      },
+      error:function (err) {
+        console.log(err);
+      }
+    })
+  }
+  //修改任务的状态
+  $(".cont").on("click","input:checkbox",function () {
+    $.ajax({
+      url:"/api/updata",
+      data:{
+        f:{
+          _id:$(this).attr("v"),
+        },
+        g:{bool:$(this).prop("checked")}
+      },
+      success:function (res) {
+        if(res.code==0){
+          load();
+        }
+      },
+      error:function (err) {
+        console.log(err)
+      }
+    })
+  })
+//单行删除
+  $(".cont").on("click","button:contains('删除')",function () {
+    console.log($(this))
+    console.log($(this).attr("del"))
+    $.ajax({
+      url:"/api/del",
+      data:{
+        _id:$(this).attr("del")
+      },
+      success:function (res) {
+        if(res.code==0){
+          load()
+        }
+      },
+      error:function (err) {
+        console.log(err)
+      }
+    })
+  })
+    $("#delAll").click(function () {
+        var bool=$(this).parent().find("input").prop("checked");
+        if(bool){
+            $(".cont input:checkbox").prop("checked",bool)
+        }else {
+            $(".cont input:checkbox").prop("checked",bool)
+        }
+    })
+
+
+</script>

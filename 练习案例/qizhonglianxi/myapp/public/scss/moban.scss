@@ -1,0 +1,115 @@
+body,div,span,p,ul,li,ol{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+html{
+    height: 100%;
+}
+body{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    font-size: 0.16rem;
+    line-height: 0.3rem;
+}
+.zjb-heard{
+    height: 0.4rem;
+    background: greenyellow;
+}
+.zj{
+    width:6.8rem;
+    height:10.22rem;
+    display: flex;
+    justify-content:space-between;
+}
+.left{
+    height:10.22rem;
+    width:1.62rem;
+    flex-grow:1;
+    background: #ccc;
+    .box{
+        height:10.22rem;
+        //flex-grow:1;
+        overflow: hidden;
+        .con{
+            min-height:11rem;
+            ul{
+                li{
+                    height:0.82rem;
+                    text-align: center;
+                    line-height:0.82rem;
+                    font-size:0.22rem;
+                    font-weight:bolder;
+                    &.one{
+                        background: #fff;
+                    }
+                }
+            }
+        }
+    }
+}
+.right{
+    width:4.8rem;
+    height:10.22rem;
+    flex-grow:1;
+    background: red;
+    .bo{
+        height:10.22rem;
+        overflow: hidden;
+        .co{
+            min-height:11rem;
+           .banner{
+               width:4.82rem;
+               margin:0.2rem auto;
+               img{
+                   width:4.82rem;
+                   height:1.66rem;
+                   border-radius:0.17rem;
+               }
+           }
+            ul{
+                display: flex;
+                flex-wrap:wrap;
+                justify-content: space-around;
+                li{
+                    width:1.02rem;
+                    height:1.48rem;
+                    text-align: center;
+                    img{
+                        width:0.66rem;
+                        height:1rem;
+                        display: block;
+                        margin:0 auto;
+                    }
+                    a{
+                        text-decoration: none;
+                        font-size:0.2rem;
+                        font-weight:bolder;
+                        color: #000;
+                        display: block;
+                        margin:0.1rem 0;
+                    }
+                }
+            }
+        }
+    }
+}
+.zjb-box{
+    height: 0;
+    flex-grow: 1;
+    overflow: hidden;
+    background: #eee;
+    .zjb-con{
+        min-height: 101%;
+        background: #fff;
+    }
+}
+.zjb-foot{
+    @extend .zjb-heard;
+}
+.aa{
+    width:5rem;
+    height:5rem;
+    background: #fff;
+}

@@ -1,0 +1,47 @@
+*{
+  margin: 0;
+  padding: 0;
+  list-style:none;
+}
+.box{
+  width:400px;
+  border: 1px solid #000;
+  margin:100px auto;
+}
+.box>ul{
+  overflow: hidden;
+  height:40px;
+}
+.box>ul>li{
+line-height:40px;
+  float: left;
+  width:200px;
+  text-align: center;
+}
+.box>ul>li.one{
+  background: orange;
+}
+.box>ol>li{
+  display: none;
+}
+.box>ol>li.two{
+  display: block;
+  /*display: none;*/
+}
+.box>ol>li>input{
+  display: block;
+  width:300px;
+  height:40px;
+  letter-spacing: 20px;
+  text-indent: 20px;
+  margin:20px auto;
+}
+.box>ol>li>button{
+  display: block;
+  border:none;
+  width:300px;
+  height:40px;
+  background: red;
+  margin:20px auto;
+  letter-spacing: 20px;
+}

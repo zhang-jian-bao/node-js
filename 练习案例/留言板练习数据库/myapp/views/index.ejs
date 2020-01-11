@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>留言板练习</title>
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <style>
+    .box{
+      margin: 100px auto;
+    }
+    table{
+      margin: 100px auto;
+    }
+    table th{
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+         <!--添加的表单-->
+       <div class="container box">
+         <form>
+           <div class="form-group">
+             <label for="xh">学号：</label>
+             <input type="text" class="form-control" id="xh" placeholder="请输入学号">
+           </div>
+           <div class="form-group">
+             <label for="xm">姓名：</label>
+             <input type="text" class="form-control" id="xm" placeholder="请输入姓名">
+           </div>
+           <div class="form-group">
+             <label for="nl">年龄：</label>
+             <input type="text" class="form-control" id="nl" placeholder="请输入年龄">
+           </div>
+             <div class="form-group">
+                 <label for="tel">电话：</label>
+                 <input type="text" class="form-control" id="tel" placeholder="请输入电话">
+             </div>
+           <button type="button" class="add btn btn-info">添加</button>
+           <button type="reset" class="btn btn-info">重置</button>
+         </form>
+         <!--表格-->
+         <table class="table table-bordered text-center">
+          <thead>
+          <tr>
+            <th>学号</th>
+            <th>姓名</th>
+            <th>年龄</th>
+            <th>电话</th>
+            <th>操作</th>
+          </tr>
+          </thead>
+          <tbody>
+          <%for(var i=0;i<data.length;i++){%>
+              <tr>
+                  <td><%=data[i].id%></td>
+                  <td><%=data[i].name%></td>
+                  <td><%=data[i].age%></td>
+                  <td><%=data[i].tel%></td>
+                  <td>
+                      <!--_id是数据库中自带的id号-->
+                      <button v="<%=data[i]._id%>" type="button" class="del btn btn-warning">删除</button>
+                      <button type="button" class="xg btn btn-danger" data-toggle="modal" data-target="#myModal">修改</button>
+                  </td>
+              </tr>
+          <%}%>
+<!--          <tr>-->
+<!--            <td>1</td>-->
+<!--            <td>张三</td>-->
+<!--            <td>20</td>-->
+<!--            <td>男</td>-->
+<!--            <td>-->
+<!--              <button type="button" class="del btn btn-warning">删除</button>-->
+<!--              <button type="button" class="xg btn btn-danger">修改</button>-->
+<!--            </td>-->
+<!--          </tr>-->
+<!--          <tr>-->
+<!--            <td>2</td>-->
+<!--            <td>李四</td>-->
+<!--            <td>20</td>-->
+<!--            <td>男</td>-->
+<!--            <td>-->
+<!--              <button type="button" class="del btn btn-warning">删除</button>-->
+<!--              <button type="button" class="xg btn btn-danger">修改</button>-->
+<!--            </td>-->
+<!--          </tr>-->
+          </tbody>
+           <tfoot>
+           <tr>
+             <td colspan="5">
+               <button type="button" class="delAll btn btn-warning">全部删除</button>
+             </td>
+           </tr>
+           </tfoot>
+         </table>
+           <!--模态框，当点击修改按钮时，弹出此框-->
+           <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+               <div class="modal-dialog" role="document">
+                   <div class="modal-content">
+                       <div class="modal-header">
+                           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                           <h4 class="modal-title" id="myModalLabel">修改数据</h4>
+                       </div>
+                       <div class="modal-body">
+                           <div class="form-group">
+                               <label for="xh">学号：</label>
+                               <input type="text" class="xh form-control" id="xh" placeholder="请输入学号">
+                           </div>
+                           <div class="form-group">
+                               <label for="xm">姓名：</label>
+                               <input type="text" class="form-control xm" id="xm" placeholder="请输入姓名">
+                           </div>
+                           <div class="form-group">
+                               <label for="nl">年龄：</label>
+                               <input type="text" class="form-control nl" id="nl" placeholder="请输入年龄">
+                           </div>
+                           <div class="form-group">
+                               <label for="tel">电话：</label>
+                               <input type="text" class="form-control tel" id="tel" placeholder="请输入电话">
+                           </div>
+                       </div>
+                       <div class="modal-footer">
+                           <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                           <button type="button" class="bc btn btn-primary" data-dismiss="modal">保存</button>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+</body>
+</html>
+<script src="js/jquery-3.4.1.js"></script>
+<script src="js/bootstrap.js"></script>
+<script>
+    //包装函数
+    function add(){
+        $.ajax({
+            url:"/api/read",
+            success:function(ret){
+                if(ret.code==0){
+                    var str="";
+                    var data=ret.data;
+                    for(var i in data){
+                        str+=`<tr>
+                                          <td>${data[i].id}</td>
+                                          <td>${data[i].name}</td>
+                                          <td>${data[i].age}</td>
+                                          <td>${data[i].tel}</td>
+                                          <td>
+                                             <button v="${data[i]._id}" type="button" class="del btn btn-warning">删除</button>
+                                             <button type="button" class="xg btn btn-danger" data-toggle="modal" data-target="#myModal">修改</button>
+                                          </td>
+                                         </tr>`
+                    }
+                    $("tbody").html(str);
+                    //当渲染后（局部更新后）让当前的学号，姓名，年龄，电话框都为空
+                    $("#xh").val("");
+                    $("#xm").val("");
+                    $("#nl").val("");
+                    $("#tel").val("");
+                }
+            },error:function (msg) {
+                console.log(msg)
+            }
+        })
+    }
+
+    /*添加数据，，，用ajax*/
+    $(".add").click(function () {
+        //获取学号，姓名，年龄，性别的内容
+        var xh=$("#xh").val();
+        var xm=$("#xm").val();
+        var nl=$("#nl").val();
+        var tel=$("#tel").val();
+
+        // alert(xh); alert(xm); alert(nl); alert(tel)检测获取数据成功
+
+        $.ajax({
+            url:"/api/write",
+            data:{
+                id:xh,
+                name:xm,
+                age:nl,
+                tel:tel
+            },
+            success:function (ret) {//成功返回数据
+                console.log(ret);
+                if(ret.code==0){
+                    //当后台返回数据是写入数据成功，让当前的tbody中的内容变空，
+                    $("tbody").html("");
+                    //在通过ajax读取后台在数据库中的内容，在渲染到tbody中
+                   add();
+                }
+
+            },error:function (msg) {//失败返回数据
+                console.log(msg)
+            }
+        })
+    });
+
+    //全部删除
+    $(".delAll").click(function () {
+        $.ajax({
+            url:"/api/delAll",
+            success:function (ret) {
+                console.log(ret);
+                if(ret.code==0){
+                    add();
+                }
+            },error:function (msg) {
+                console.log(msg);
+            }
+        })
+    });
+
+    //单行删除,需要用到事件委托
+    $("tbody").on("click",".del",function () {
+        // alert(111)
+        //获取_id的值，来确定当前行的位置（如：id,name,age,del都可）
+        var a=$(this).attr("v");
+        // alert(a);//检测当前弹出的_id是否不同
+        $.ajax({
+            url:"/api/del",
+            data:{
+                _id:a
+            },
+            success:function (ret) {
+                console.log(ret);
+                if(ret.code==0){
+                    add();
+                }
+            },error:function (msg) {
+                console.log(msg);
+            }
+
+        })
+    });
+
+    // 当点击修改时，获取他的兄弟元素删除的_id
+    $("tbody").on("click",".xg",function () {
+        var a=$(this).siblings().attr("v");
+        // alert(a)//检测他兄弟删除的_id
+
+        $(".bc").attr("v",a);//将他兄弟删除的属性也添加成了自己的属性
+    });
+
+    // 当点击弹框保存时，修改数据,有点问题，一次只能修改一次，下次要刷新
+    $(".bc").click(function () {
+        //attr一个参数是获取，两个参数是设置
+        var _id=$(this).attr("v");
+        alert(_id)
+        //获取弹框里的学号，姓名，年龄，性别的内容
+        //注意：这里要用class名，id名只能用一次
+        var xh=$(".xh").val();
+        var xm=$(".xm").val();
+        var nl=$(".nl").val();
+        var tel=$(".tel").val();
+        // alert(xh); alert(xm); alert(nl); alert(tel);
+        //ajax
+        $.ajax({
+            url:"/api/xg",
+            data:{
+                f:{
+                    _id:_id
+                },
+                da:{
+                    id:xh,
+                    name:xm,
+                    age:nl,
+                    tel:tel
+                }
+            },
+            success:function (ret) {
+                console.log(ret);
+                if(ret.code==0){
+                    $("tbody").html("");
+                    add();
+                }
+            },error:function (msg) {
+                console.log(msg)
+            }
+
+        })
+
+    });
+
+    // 修改的数据,,,有问题
+    // var a;
+    // $("tbody").on("click",".xg",function () {
+    //     //获取当前的他的父亲的儿子的第一个学号的内容
+    //     a=$(this).parents("tr").children().eq(0).html();
+    //     // alert(a);
+    //     // var b=a.attr("id",a);
+    //     // alert(b)
+    // })
+    // $(".bc").click(function () {
+    //        var b=a;
+    //        // alert(b)
+    //         var xh=$(".xh").val();
+    //         var xm=$(".xm").val();
+    //         var nl=$(".nl").val();
+    //         var tel=$(".tel").val();
+    //         // alert(xh); alert(xm); alert(nl); alert(tel);
+    //         //ajax
+    //         $.ajax({
+    //             url:"/api/xg",
+    //             data:{
+    //                 f:{
+    //                     _id:a
+    //                 },
+    //                 da:{
+    //                     id:xh,
+    //                     name:xm,
+    //                     age:nl,
+    //                     tel:tel
+    //                 }
+    //             },
+    //             success:function (ret) {
+    //                 console.log(ret);
+    //                 if(ret.code==0){
+    //                     $("tbody").html("");
+    //                     add();
+    //                 }
+    //             },error:function (msg) {
+    //                 console.log(msg)
+    //             }
+    //
+    //         })
+    // })
+
+</script>

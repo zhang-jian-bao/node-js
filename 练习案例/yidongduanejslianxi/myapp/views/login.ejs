@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,
+  maximum-scale=1,minimum-scale=1,user-scalable=no">
+    <title>登录</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .box{
+            width:400px;
+            height:600px;
+            margin:100px auto;
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+<body>
+       <div class="box">
+           <input type="text" placeholder="请输入用户名" id="a"><br>
+           <input type="text" placeholder="密码" id="b"><br>
+           <button>登录</button>
+       </div>
+</body>
+</html>
+<script src="js/jquery-3.4.1.js"></script>
+<script>
+   $("button").click(function () {
+       var a=$("#a").val();
+       var b=$("#b").val();
+       $.ajax({
+           type:"POST",
+           url:"/dologin",
+           data:{
+               a:a,
+               b:b
+           },
+           success: function (ret) {
+              if(ret=="成功"){
+                  location.href="http://localhost:8000/success";
+              }else{
+                  location.href="http://localhost:8000/login";
+              }
+           },error: function (error) {
+               console.log(error)
+           }
+       })
+   })
+</script>

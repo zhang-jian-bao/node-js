@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{margin: 0; padding: 0;}
+        .header{height: 80px; background: #333;}
+        .nav{background: #333; height: 35px; border-top:1px solid #ddd;}
+        .nav ul{list-style: none; width: 1000px; margin: 0 auto;}
+        .nav ul li{float: left; cursor: pointer; color: #fff; width: 200px; text-align: center; line-height: 35px;}
+        .banner{height: 300px; overflow: hidden; position: relative;}
+        .banner ul{list-style: none;height: 300px; width: 100%;}
+        .banner ul li{height: 300px;}
+        .banner ul li img{width: 100%; height: 100%;}
+        .banner .circle{width: 100%; height: 20px; text-align: center;  position: absolute; bottom: 10px; left: 0;}
+        .banner .circle span{display: inline-block; width: 15px; cursor: pointer; text-align: center; line-height: 15px; font-size: 12px; height: 15px; border-radius: 50%; background: #fff; color: purple;}
+        .container{padding: 20px 0; width: 1000px; margin: 0 auto;}
+    </style>
+</head>
+<body>
+    <div class="header">
+
+    </div>
+
+    <div class="nav">
+        <ul>
+            <li>首页1</li>
+            <li>首页2</li>
+            <li>首页3</li>
+            <li>首页4</li>
+            <li>首页5</li>
+        </ul>
+    </div>
+
+    <div class="banner">
+        <ul>
+
+        </ul>
+        <div class="circle">
+            <span>1</span>
+            <span>2</span>
+            <span>3</span>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="title">
+            <label for="">标题：</label>
+            <input type="text" id="title_input">
+        </div>
+        <div class="container">
+            <label for="">内容：</label>
+            <textarea name="" id="content" ></textarea>
+        </div>
+        <div class="btn">
+            <button>发布</button>
+        </div>
+    </div>
+</body>
+</html>
+<script src="js/jquery-1.11.2.min.js"></script>
+<script>
+
+    //等待页面所有dom元素加载完毕之后在执行
+    $(function () {
+        //获取所有的span，并添加点击事件
+        $("span").click(function () {
+            //获取当前点击元素的下表
+            var _index = $(this).index();
+            //控制轮播图淡入与淡出
+            $(".banner ul li").eq(_index).fadeIn().siblings().fadeOut();
+        });
+
+
+        //发送ajax请求，请求轮播图的数据
+        $.ajax({
+            url : "http://localhost:3000/api/banner",
+            data : {},
+            success : function (response) {
+                //获取数据
+               var data = JSON.parse(response).banner;
+                //遍历渲染数据
+               $.each(data,function (index,item) {
+                   //创建li标签
+                   var li = $("<li></li>");
+                   //设置标签的内容
+                   li.html("<img src='"+ item.imgUrl +"'>");
+                   //把创建的li标签添加到ul里面
+                    $(".banner ul").append(li);
+               })
+
+            },
+            error : function (error) {
+                console.log(error);
+            }
+        })
+
+
+
+        //获取发送按钮，添加点击事件，发送ajax请求
+        $(".btn button").click(function () {
+            //获取标题
+           var title = $("#title_input").val();
+           //获取内容
+           var content = $("#content").val();
+
+            //发送ajax
+            $.ajax({
+                url : "http://localhost:3000/api/write",
+                data : {
+                    userTitle: title,
+                    userContent : content
+                },
+                success : function (response) {
+                    console.log(response);
+                },
+                error : function (error) {
+                    console.log(error);
+                }
+            })
+        })
+    })
+
+</script>

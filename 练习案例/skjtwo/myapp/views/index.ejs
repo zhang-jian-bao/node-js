@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>数据库练习2</title>
+    <style>
+      table{
+        width:800px;
+        height:40px;
+        text-align: center;
+        border-collapse: collapse;/*边框溶解*/
+        margin:100px auto;
+      }
+      .box{
+        width:800px;
+        margin:100px auto;
+      }
+      .box input{
+        text-indent:2em;/*首行缩进*/
+        letter-spacing: 10px;/*中文字体之间的间距*/
+      }
+    </style>
+  </head>
+  <body>
+       <div class="box">
+         <p>
+           <label for="a">学号：</label>
+           <input type="text" placeholder="请输入学号" id="a">
+         </p>
+         <p>
+           <label for="b">姓名：</label>
+           <input type="text" placeholder="请输入姓名" id="b">
+         </p>
+         <p>
+           <label for="c">年龄：</label>
+           <input type="text" placeholder="请输入年龄" id="c">
+         </p>
+         <p>
+           <label for="d">电话：</label>
+           <input type="text" placeholder="请输入电话" id="d">
+         </p>
+         <button id="bt">添加</button>
+         <p>
+           <input type="text" placeholder="请输入要删除的姓名" id="aa">
+           <button id="bb">删除</button>
+         </p>
+         <p>
+           <input type="text" placeholder="请输入要修改的名字" id="xa">
+           <input type="text" placeholder="请输入修改后的名字" id="xb">
+           <button id="xx">修改</button>
+         </p>
+       </div>
+        <table border="1">
+          <tr>
+            <th>学号</th>
+            <th>姓名</th>
+            <th>年龄</th>
+            <th>电话</th>
+          </tr>
+          <%for(var i=0;i<da.length;i++){%>
+          <tr>
+            <td><%=da[i].id%></td>
+            <td><%=da[i].name%></td>
+            <td><%=da[i].age%></td>
+            <td><%=da[i].tel%></td>
+          </tr>
+          <%}%>
+        </table>
+  </body>
+</html>
+<script src="js/jquery-3.4.1.js"></script>
+<script>
+  //点击添加按钮添加数据
+       $("#bt").click(function () {
+         var a=$("#a").val();
+         var b=$("#b").val();
+         var c=$("#c").val();
+         var d=$("#d").val();
+         if(a==""||b==""||c==""||d==""){
+           alert("内容不能为空！")
+         }else if(a==""){
+           alert("学号不能为空！")
+         }else if(b==""){
+           alert("姓名不能为空！")
+         }else if(c==""){
+           alert("年龄不能为空！")
+         }else if(d==""){
+           alert("电话不能为空！")
+         }else{
+           $.ajax({
+             url:"/tj",
+             data:{
+               id:a,
+               name:b,
+               age:c,
+               tel:d
+             },
+             success: function (ret) {
+               console.log(ret)
+               if(ret=="添加成功"){
+                 location.href="/"
+               }
+             },error: function (error) {
+               console.log(error)
+             }
+           })
+         }
+       });
+  //点击删除按钮删除指定的数据
+  $("#bb").click(function () {
+    var nn=$("#aa").val();
+  if(nn==""){
+    alert("内容不能为空！")
+  }else{
+    $.ajax({
+      url:"/sc",
+      data:{
+        name:nn
+      },
+      success: function (ret) {
+        console.log(ret);
+        if(ret=="删除成功"){
+          location.href="/"
+        }
+      },error: function (error) {
+        console.log(error)
+      }
+
+    })
+  }
+  });
+  //点击修改按钮修改姓名
+  $("#xx").click(function () {
+    var xa=$("#xa").val();
+    var xb=$("#xb").val();
+    if(xa==""||xb==""){
+      alert("内容不能为空！")
+    }else if(xa==""){
+      alert("内容不能为空！")
+    }else if(xb==""){
+      alert("内容不能为空！")
+    }else{
+      $.ajax({
+        url:"/xg",
+        data:{
+          list1:{
+            name:xa
+          },
+          list2:{
+            name:xb
+          }
+        },
+        success: function (ret) {
+          console.log(ret)
+          if(ret=="修改成功"){
+            location.href="/"
+          }
+        },error: function (error) {
+          console.log(error)
+        }
+      })
+    }
+  })
+</script>

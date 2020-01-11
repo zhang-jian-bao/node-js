@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>lianxi </title>
+    <style>
+      table{
+        width:800px;
+        /*border:solid 1px #000;*/
+        border-spacing: 0;
+        border-collapse: collapse;
+        margin:100px auto;
+        text-align: center;
+      }
+        .box{
+            width:800px;
+            margin:100px auto;
+        }
+    </style>
+  </head>
+  <body>
+    <h1>渲染主页</h1>
+               <div class="box">
+                   <p>
+                       <label for="a">学号：</label>
+                       <input type="text" placeholder="请输入学号" id="a">
+                   </p>
+                   <p>
+                       <label for="b">姓名：</label>
+                       <input type="text" placeholder="请输入姓名" id="b">
+                   </p>
+                   <p>
+                       <label for="c">年龄：</label>
+                       <input type="text" placeholder="请输入年龄" id="c">
+                   </p>
+                   <p>
+                       <label for="d">性别：</label>
+                       <!--<input type="text" placeholder="请输入学号" id="d">-->
+                       <select name="" id="d">
+                           <option value="男">男</option>
+                           <option value="女">女</option>
+                       </select>
+                   </p>
+                   <p>
+                       <label for="e">电话：</label>
+                       <input type="text" placeholder="请输入电话" id="e" required="required">
+                   </p>
+                   <button id="bt">添加</button>
+                   <br>
+                   <input type="text" id="aa" placeholder="请输入学号删除添加0">
+                   <button id="bb">删除</button>
+                   <br>
+                   <input type="text" id="cc" placeholder="请输入需要修改的姓名">
+                   <input type="text" id="dd" placeholder="请输入修改后的姓名">
+                   <button id="ee">修改</button>
+               </div>
+               <table border="1px solid #000">
+                 <tr>
+                   <th>学号</th>
+                   <th>姓名</th>
+                   <th>年龄</th>
+                   <th>性别</th>
+                   <th>电话</th>
+                 </tr>
+                 <%for(var i=0;i<cc.length;i++){%>
+                 <tr>
+                   <td><%=cc[i].id%></td>
+                   <td><%=cc[i].name%></td>
+                   <td><%=cc[i].age%></td>
+                   <td><%=cc[i].sex%></td>
+                   <td><%=cc[i].tel%></td>
+                 </tr>
+                 <%}%>
+               </table>
+  </body>
+</html>
+<script src="js/jquery-3.4.1.js"></script>
+<script>
+    $("#bt").click(function () {
+        var id=$("#a").val();
+        var name=$("#b").val();
+        var age=$("#c").val();
+        var sex=$("#d").val();
+        var tel=$("#e").val();
+        if(id=="") {
+            alert("请输入学号！");
+        }else if(name==""){
+            alert("姓名不能为空！");
+        }else if(age==""){
+            alert("年龄不能为空！");
+        }else if(sex==""){
+            alert("性别不能为空！")
+        }else{
+            $.ajax({
+                url:"/rest",
+                data:{
+                    id:id,
+                    name:name,
+                    age:age,
+                    sex:sex,
+                    tel:tel
+                },
+                success: function (ret) {
+                    console.log(ret);
+                    if(ret=="成功"){
+                        location.href="http://localhost:3000"
+                    }
+                },error: function (error) {
+                    console.log(error);
+                }
+            })
+        }
+    })
+    //删除
+    $("#bb").click(function () {
+        var aa=$("#aa").val();
+     if(aa==""){
+         alert("不能为空！");
+     }else{
+         $.ajax({
+             url:"/sc",
+             data:{
+                 id:aa
+             },
+             success: function (ret) {
+                 console.log(ret+"删除成功");
+                 if(ret=="删除成功"){
+                     location.href="/"
+                 }
+             },error:function(error){
+                 console.log(error);
+             }
+         })
+     }
+    })
+    //修改
+    $("#ee").click(function () {
+        var cc=$("#cc").val();
+        var dd=$("#dd").val();
+        $.ajax({
+            url:"/xg",
+            data:{
+                    list1:{
+                        name:cc
+                    },
+                list2:{
+                    name:dd
+                }
+            },
+            success: function (ret) {
+                console.log(ret+"修改成功");
+                if(ret=="修改成功"){
+                    location.href="/"
+                }
+            },error:function(error){
+                console.log(error);
+            }
+        })
+    })
+    //单行删除有点问题
+    //  $("#btt").click(function () {
+    //    alert("111")
+    //    //获取当前学号的html()，声明变量id
+    //    var da=$(this).parents('tr').children().eq(0).html();
+    //    $.ajax({
+    //      url:"/dsc",
+    //      data:{
+    //        id:da
+    //      },
+    //      success: function (ret) {
+    //        console.log(ret)
+    //      },error: function (error) {
+    //        console.log(error)
+    //      }
+    //    })
+    //  })
+</script>

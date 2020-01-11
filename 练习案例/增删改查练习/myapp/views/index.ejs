@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>增删改查练习</title>
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <style>
+    .box{
+      margin: 100px auto;
+    }
+    table th{
+      text-align: center;
+    }
+    table {
+      margin: 100px auto;
+    }
+    .ss{
+      margin: 20px auto;
+    }
+  </style>
+</head>
+<body>
+        <div class="container box" >
+          <!--表单-->
+
+          <form>
+            <div class="form-group">
+              <label for="xh">学号：</label>
+              <input type="text" class=" form-control" id="xh" placeholder="请输入学号">
+            </div>
+            <div class="form-group">
+              <label for="xm">姓名：</label>
+              <input type="text" class=" form-control" id="xm" placeholder="请输入姓名">
+            </div>
+            <div class="form-group">
+              <label for="nl">年龄：</label>
+              <input type="text" class=" form-control" id="nl" placeholder="请输入年龄">
+            </div>
+            <div class="form-group">
+              <label for="dh">电话：</label>
+              <input type="text" class=" form-control" id="dh" placeholder="请输入电话">
+            </div>
+            <button type="button" class="add btn btn-default">添加</button>
+            <div class="form-group">
+              <label for="ss">搜素：</label>
+              <input type="text" class="ss form-control" id="ss" placeholder="请输入要搜索的姓名">
+            </div>
+          </form>
+
+            <!--表格-->
+          <table class="table table-bordered table-striped text-center">
+           <thead>
+           <tr>
+             <th>学号</th>
+             <th>年龄</th>
+             <th>性别</th>
+             <th>电话</th>
+             <th>操作</th>
+           </tr>
+           </thead>
+          <tbody>
+          <%for(var i=0;i<data.length;i++){%>
+            <tr>
+              <td><%= data[i].id%></td>
+              <td><%= data[i].name%></td>
+              <td><%= data[i].age%></td>
+              <td><%= data[i].tel%></td>
+              <td>
+                <button v="<%= data[i]._id%>" type="button" class=" del btn btn-warning">删除</button>
+
+                <button type="button" class="edit btn btn-danger" data-toggle="modal" data-target="#myModal">编辑</button>
+              </td>
+
+            </tr>
+          <%}%>
+          </tbody>
+           <tfoot>
+           <tr>
+             <td colspan="5">
+               <button type="button" class=" delAll btn btn-warning">全部删除</button>
+             </td>
+           </tr>
+           <tr>
+             <td colspan="5">
+               <p class="pp">
+                 <%a=1%>
+                 <%for(var k=0;k<data.length;k++){%>
+                 <%if(k%5==0){%>
+                 <span><%=a%></span>
+                 <%a++%>
+                 <%}%>
+                 <%}%>
+               </p>
+             </td>
+           </tr>
+           </tfoot>
+          </table>
+
+
+          <!--模态框-->
+
+          <div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title">修改数据</h4>
+                </div>
+                <div class="modal-body">
+                  <div class="form-group">
+                    <label for="xh">学号：</label>
+                    <input type="text" class="xh form-control" id="xh" placeholder="请输入学号">
+                  </div>
+                  <div class="form-group">
+                    <label for="xm">姓名：</label>
+                    <input type="text" class="xm form-control" id="xm" placeholder="请输入姓名">
+                  </div>
+                  <div class="form-group">
+                    <label for="nl">年龄：</label>
+                    <input type="text" class="nl form-control" id="nl" placeholder="请输入年龄">
+                  </div>
+                  <div class="form-group">
+                    <label for="dh">电话：</label>
+                    <input type="text" class="dh form-control" id="dh" placeholder="请输入电话">
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                  <button type="button" class="bc btn btn-primary" data-dismiss="modal">保存</button>
+                </div>
+              </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+          </div><!-- /.modal -->
+        </div>
+</body>
+</html>
+<script src="js/jquery-3.4.1.js"></script>
+<script src="js/bootstrap.js"></script>
+<script>
+ $(function () {
+   //封装函数
+   function add(){
+     $("tbody").html("");
+     $.ajax({
+       url:"/pag",
+       success:function (ret) {
+         console.log(ret)
+         if(ret.code==0){
+           var da=ret.data;
+           var str="";
+           for(var i in da){
+             str+=` <tr>
+              <td>${da[i].id}</td>
+              <td>${da[i].name}</td>
+              <td>${da[i].age}</td>
+              <td>${da[i].tel}</td>
+              <td>
+                <button v="${da[i]._id}" type="button" class=" del btn btn-warning">删除</button>
+
+                <button type="button" class="edit btn btn-danger" data-toggle="modal" data-target="#myModal">编辑</button>
+              </td>
+
+            </tr>`
+           }
+           $("tbody").html(str);
+           $(".xh").val("");
+           $(".xm").val("");
+           $(".nl").val("");
+           $(".dh").val("");
+         }
+       },error:function (msg) {
+         console.log(msg)
+       }
+     })
+   }
+   add()
+
+
+   //添加数据
+   $(".add").click(function () {
+     var a=$("#xh").val();
+     var b=$("#xm").val();
+     var c=$("#nl").val();
+     var d=$("#dh").val();
+     $.ajax({
+       url:"/add",
+       data:{
+         id:a,
+         name:b,
+         age:c,
+         tel:d
+       },
+       success:function (ret) {
+         console.log(ret)
+         if(ret.code==0){
+           add();
+         }
+       },error:function (msg) {
+         console.log(msg)
+       }
+     })
+   })
+
+   //全删
+   $(".delAll").click(function () {
+     $.ajax({
+       url:"/delAll",
+       success:function (ret) {
+         console.log(ret)
+         if(ret.code==0){
+           add();
+         }
+       },error:function (msg) {
+         console.log(msg)
+       }
+     })
+   })
+
+   //单删 事件委托
+   $("tbody").on("click",".del",function () {
+     var a=$(this).attr("v");
+     $.ajax({
+       url:"/del",
+       data:{
+         _id:a
+       },
+       success:function (ret) {
+         console.log(ret)
+         if(ret.code==0){
+           add();
+         }
+       },error:function (msg) {
+         console.log(msg)
+       }
+     })
+   })
+
+   //修改 事件委托
+   $("tbody").on("click",".edit",function () {
+     var a=$(this).siblings().attr("v");
+     $(".bc").attr("_id",a);
+   })
+   $(".bc").click(function () {
+     var a=$(this).attr("_id");
+     // alert(a)
+     var aa=$(".xh").val();
+     var b=$(".xm").val();
+     var c=$(".nl").val();
+     var d=$(".dh").val();
+     alert(aa)
+     $.ajax({
+       url:"/edit",
+       data:{
+         q:{
+           _id:a
+         },
+         qq:{
+           id:aa,
+           name:b,
+           age:c,
+           tel:d
+         }
+       },
+       success:function (ret) {
+         console.log(ret)
+         if(ret.code==0){
+           add()
+         }
+       },error:function (msg) {
+         console.log(msg)
+       }
+     })
+   })
+
+   //搜索框  模糊查询  input事件 绑定事件
+   $(".ss").on("input",function () {
+     var a=$(this).val();
+     if(a==""){
+       add();
+     }else{
+       $.ajax({
+         url:"/mh",
+         data:{
+           name:a
+         },
+         success:function (ret) {
+           console.log(ret)
+           if(ret.code==0){
+             var da=ret.data;
+             var str="";
+             for(var i in da){
+               str+=` <tr>
+              <td>${da[i].id}</td>
+              <td>${da[i].name}</td>
+              <td>${da[i].age}</td>
+              <td>${da[i].tel}</td>
+              <td>
+                <button v="${da[i]._id}" type="button" class=" del btn btn-warning">删除</button>
+
+                <button type="button" class="edit btn btn-danger" data-toggle="modal" data-target="#myModal">编辑</button>
+              </td>
+
+            </tr>`
+             }
+             $("tbody").html(str);
+           }
+         },
+         error:function (msg) {
+           console.log(msg)
+         }
+       })
+     }
+   })
+
+   //搜索框  回车
+   $(".ss").keydown(function (e) {
+     var a=e.keyCode;
+     if(a==13){
+       var b=$(this).val();
+       $.ajax({
+         url:"/find",
+         data:{
+           name:b
+         },
+         success:function (ret) {
+           console.log(ret)
+           if(ret.code==0){
+             var da=ret.data;
+             var str="";
+             for(var i in da){
+               str+=` <tr>
+              <td>${da[i].id}</td>
+              <td>${da[i].name}</td>
+              <td>${da[i].age}</td>
+              <td>${da[i].tel}</td>
+              <td>
+                <button v="${da[i]._id}" type="button" class=" del btn btn-warning">删除</button>
+
+                <button type="button" class="edit btn btn-danger" data-toggle="modal" data-target="#myModal">编辑</button>
+              </td>
+
+            </tr>`
+             }
+             $("tbody").html(str);
+           }
+         },error:function (msg) {
+           console.log(msg)
+         }
+
+       })
+     }
+   });
+
+   //分页
+   $(".pp>span").css({background:"green",width:"40px",height:"40px",
+     display:"inline-block",textAlign:"center",lineHeight:"40px",
+     fontSize:"20px"}).next().css({background:"#ccc"})
+   $(".pp>span").on("click",function () {
+     $(this).css({background:"green",width:"40px",height:"40px",
+       display:"inline-block",textAlign:"center",lineHeight:"40px",
+       fontSize:"20px"}).siblings().css({background:"#ccc"})
+     var a=$(this).index();
+     $.ajax({
+       url:"/pag",
+       data:{
+         index:a
+       },
+       success:function (ret) {
+         if (ret.code==0){
+           var da=ret.data;
+           var str="";
+           for(var i in da){
+             str+=` <tr>
+              <td>${da[i].id}</td>
+              <td>${da[i].name}</td>
+              <td>${da[i].age}</td>
+              <td>${da[i].tel}</td>
+              <td>
+                <button v="${da[i]._id}" type="button" class=" del btn btn-warning">删除</button>
+
+                <button type="button" class="edit btn btn-danger" data-toggle="modal" data-target="#myModal">编辑</button>
+              </td>
+
+            </tr>`
+           }
+           $("tbody").html(str);
+         }
+       },error:function (msg) {
+         console.log(msg)
+       }
+     })
+   })
+
+
+ })
+</script>

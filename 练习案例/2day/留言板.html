@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>留言板</title>
+    <style>
+        div{
+            margin:100px auto;
+        }
+    </style>
+</head>
+<body>
+      <div>
+          <label for="b">用户：</label>
+          <input type="text" placeholder="请输入用户名" id="b"><br>
+          <label for="a">留言板:</label>
+          <textarea name="" id="a" cols="30" rows="10"></textarea><br>
+          <button>留言</button>
+      </div>
+</body>
+</html>
+       <script src="js/jquery-3.4.1.js"></script>
+       <script>
+//           var yh=document.querySelector("#b");
+//           var ly=document.querySelector("#a");
+//           var an=document.querySelector("button");
+          $("button").click(function () {
+//              alert(111);
+               var c=$("#b").val();
+               var d=$("#a").val();
+              console.log(c,d);
+               $.ajax({
+                   type:"get",
+                   url:"http://localhost:9090",
+                   async:true,
+                   data:{
+                       yh:c,
+                       ly:d
+                   },
+                   success: function (ret) {
+                       if(ret=="读取成功"){
+                           var str='';
+                           str+=`<p>aa</p>`;
+                           $("div").prepend(str);
+                       }
+                   },error: function (msg) {
+                       console.log("读取失误html")
+                   }
+               })
+           })
+
+
+
+
+
+       </script>

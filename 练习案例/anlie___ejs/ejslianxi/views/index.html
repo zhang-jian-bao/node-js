@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>登录注册练习</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <div class="box">
+      <ul>
+        <li class="one">登录</li>
+        <li>注册</li>
+      </ul>
+      <ol>
+        <li class="two">
+          <label for="a"></label>
+          <input type="text" placeholder="请输入用户名" id="a"><br>
+          <label for="b"></label>
+          <input type="text" placeholder="请输入密码" id=b><br>
+          <button id="dl">登录</button>
+        </li>
+        <li>
+          <label for="c"></label>
+          <input type="text" placeholder="请输入用户名" id="c"><br>
+          <label for="d"></label>
+          <input type="text" placeholder="请输入密码" id="d"><br>
+          <label for="e"></label>
+          <input type="text" id="e" placeholder="再次确认密码"><br>
+          <button class="zc">注册</button>
+        </li>
+      </ol>
+    </div>
+  </body>
+</html>
+<script src="js/jquery-3.4.1.js"></script>
+<script>
+  $(".box>ul>li").click(function () {
+    $(this).addClass("one").siblings().removeClass("one");
+    var i=$(this).index();
+    $(".box>ol>li").eq(i).show().siblings().hide();
+  });
+  $(".zc").click(function () {
+    alert(111);
+    var yh=$("#c").val();
+    var pa=$("#d").val();
+    var pass=$("#e").val();
+    console.log(yh,pa,pass);
+    $.ajax({
+      type:"POST",
+      url:"/api/zc",
+      data:{
+        yh:yh,
+        pa:pa,
+        pass:pass
+      },
+      success: function (ret) {
+        console.log(ret+"注册成功");
+      },error: function (error) {
+        console.log(error+"错误")
+      }
+    })
+  });
+  $("#dl").click(function () {
+    var a=$("#a").val();
+    var b=$("#b").val();
+    $.ajax({
+      type:"POST",
+      url:"/api/login",
+      data:{
+        name:a,
+        pas:b
+      },
+      success: function (ret) {
+        console.log(ret);
+        if(ret=="登录成功"){
+          alert("优秀！！！");
+        }else{
+          alert("渣渣！！！");
+        }
+      },error:function(error){
+        console.log(error)
+      }
+    })
+  })
+</script>

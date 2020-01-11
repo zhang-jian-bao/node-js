@@ -1,0 +1,28 @@
+{
+  "product" : [
+    {
+      "img" : "",
+      "yprice" : 998,
+      "xprice" : 90,
+      "name" : "电水壶"
+    },
+    {
+      "img" : "",
+      "yprice" : 998,
+      "xprice" : 90,
+      "name" : "电水壶"
+    },
+    {
+      "img" : "",
+      "yprice" : 998,
+      "xprice" : 90,
+      "name" : "电水壶"
+    },
+    {
+      "img" : "",
+      "yprice" : 998,
+      "xprice" : 90,
+      "name" : "电水壶"
+    }
+  ]
+}
